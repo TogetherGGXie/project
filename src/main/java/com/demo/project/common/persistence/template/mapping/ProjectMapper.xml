@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.project.common.persistence.dao.ProjectMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.demo.project.common.persistence.template.modal.Project">
+        <id column="project_id" property="projectId" />
+        <result column="project_name" property="projectName" />
+        <result column="leader_id" property="leaderId" />
+        <result column="start_time" property="startTime" />
+        <result column="end_time" property="endTime" />
+        <result column="img" property="img" />
+    </resultMap>
+
+</mapper>

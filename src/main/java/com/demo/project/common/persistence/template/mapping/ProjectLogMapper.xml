@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.project.common.persistence.dao.ProjectLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.demo.project.common.persistence.template.modal.ProjectLog">
+        <id column="log_id" property="logId" />
+        <result column="project_id" property="projectId" />
+        <result column="user_id" property="userId" />
+        <result column="date" property="date" />
+        <result column="day" property="day" />
+        <result column="content" property="content" />
+    </resultMap>
+
+</mapper>

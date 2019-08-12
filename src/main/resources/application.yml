@@ -1,0 +1,28 @@
+server:
+  port: 8088
+  connection-timeout: 72000000ms
+spring:
+  profiles:
+    active: dev
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/project?useSSL=false
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+#  servlet:
+#    multipart:
+#      # 文件传输大小最大值设置
+#      max-file-size: 1000Mb
+#      max-request-size: 1000Mb
+
+  #thymeleaf配置
+  thymeleaf:
+    encoding: UTF-8
+    mode: HTML5
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false

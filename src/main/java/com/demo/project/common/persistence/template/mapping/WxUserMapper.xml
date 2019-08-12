@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.project.common.persistence.dao.WxUserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.demo.project.common.persistence.template.modal.WxUser">
+        <id column="user_id" property="userId" />
+        <result column="open_id" property="openId" />
+        <result column="name" property="name" />
+        <result column="nickname" property="nickname" />
+        <result column="head_image" property="headImage" />
+        <result column="authority" property="authority" />
+        <result column="phone" property="phone" />
+    </resultMap>
+
+</mapper>
