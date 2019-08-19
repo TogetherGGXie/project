@@ -1,4 +1,4 @@
-package com.demo.project.common.persistence.controller;
+package com.demo.project.common.controller;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;

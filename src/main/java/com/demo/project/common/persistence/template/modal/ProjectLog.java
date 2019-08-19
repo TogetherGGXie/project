@@ -5,6 +5,9 @@ import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 
 /**
@@ -38,16 +41,17 @@ public class ProjectLog implements Serializable {
     /**
      * 日志日期
      */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
-    /**
-     * 星期
-     */
-    private Integer day;
     /**
      * 内容
      */
     private String content;
-
+    /**
+     * 图片
+     */
+    private String pics;
 
     public Integer getLogId() {
         return logId;
@@ -81,13 +85,6 @@ public class ProjectLog implements Serializable {
         this.date = date;
     }
 
-    public Integer getDay() {
-        return day;
-    }
-
-    public void setDay(Integer day) {
-        this.day = day;
-    }
 
     public String getContent() {
         return content;
@@ -97,15 +94,24 @@ public class ProjectLog implements Serializable {
         this.content = content;
     }
 
+
+    public String getPics() {
+        return pics;
+    }
+
+    public void setPics(String pics) {
+        this.pics = pics;
+    }
     @Override
     public String toString() {
         return "ProjectLog{" +
-        ", logId=" + logId +
-        ", projectId=" + projectId +
-        ", userId=" + userId +
-        ", date=" + date +
-        ", day=" + day +
-        ", content=" + content +
-        "}";
+                "logId=" + logId +
+                ", projectId=" + projectId +
+                ", userId=" + userId +
+                ", date=" + date +
+                ", content='" + content + '\'' +
+                ", pics='" + pics + '\'' +
+                '}';
     }
+
 }

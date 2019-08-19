@@ -1,7 +1,11 @@
 package com.demo.project.common.persistence.service;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.demo.project.common.persistence.template.modal.Project;
 import com.baomidou.mybatisplus.service.IService;
+
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +16,6 @@ import com.baomidou.mybatisplus.service.IService;
  * @since 2019-08-12
  */
 public interface ProjectService extends IService<Project> {
-
+    Page<HashMap<String, Object>> getProjects(Page<HashMap<String, Object>> pager, String keyword);
+    List<HashMap<String, Object>> getProjectNames();
 }

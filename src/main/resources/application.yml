@@ -13,11 +13,11 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-#  servlet:
-#    multipart:
-#      # 文件传输大小最大值设置
-#      max-file-size: 1000Mb
-#      max-request-size: 1000Mb
+  servlet:
+    multipart:
+      # 文件传输大小最大值设置
+      max-file-size: 1000Mb
+      max-request-size: 1000Mb
 
   #thymeleaf配置
   thymeleaf:
@@ -26,3 +26,5 @@ spring:
     prefix: classpath:/templates/
     suffix: .html
     cache: false
+
+

@@ -8,8 +8,8 @@
         <result column="project_id" property="projectId" />
         <result column="user_id" property="userId" />
         <result column="date" property="date" />
-        <result column="day" property="day" />
         <result column="content" property="content" />
+        <result column="pics" property="pics" />
     </resultMap>
 
 </mapper>
