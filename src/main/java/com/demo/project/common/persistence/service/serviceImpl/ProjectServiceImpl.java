@@ -33,6 +33,11 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
     }
 
     @Override
+    public HashMap<String, Object> getProject(Integer projectId) {
+        return projectMapper.getProject(projectId);
+    }
+
+    @Override
     public List<HashMap<String, Object>> getProjectNames() {
         return projectMapper.getProjectNames();
     }

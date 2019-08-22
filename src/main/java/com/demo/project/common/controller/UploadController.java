@@ -22,9 +22,18 @@ public class UploadController {
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public String uploadImg(@RequestParam("img") MultipartFile pics,
-                            @RequestParam("folder") String folder) {
+                            @RequestParam("folder") Integer folder) {
+        String folderpath ="";
+        switch (folder){
+            case 1:
+                folderpath = "project";
+                break;
+            case 2:
+                folderpath = "projectLog";
+        }
         String fileName = UUID.randomUUID().toString().replaceAll("-", "")+".png";
-        fileName = folder+"/".concat(fileName);
+
+        fileName = folderpath+"/".concat(fileName);
         System.out.println(fileName);
         try {
             FileUtil.uploadFile(pics.getBytes(), path, fileName);

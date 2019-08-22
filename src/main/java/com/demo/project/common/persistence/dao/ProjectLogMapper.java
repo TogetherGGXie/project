@@ -1,13 +1,14 @@
 package com.demo.project.common.persistence.dao;
 
+import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 import com.demo.project.common.persistence.template.modal.ProjectLog;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * <p>
@@ -30,4 +31,26 @@ public interface ProjectLogMapper extends BaseMapper<ProjectLog> {
 //                   @Param("content") String content,
 //                   @Param("pics") String pics);
         Integer addLog(ProjectLog projectLog);
+
+    @Select("SELECT\n" +
+            "\tproject_log.log_id,\n" +
+            "\twx_user.NAME,\n" +
+            "\tproject_log.date,\n" +
+            "\tproject_log.content,\n" +
+            "\tproject_log.pics \n" +
+            "FROM\n" +
+            "\t`project_log`\n" +
+            "\tJOIN wx_user ON project_log.user_id = wx_user.user_id \n" +
+            "WHERE\n" +
+            "\tproject_log.project_id = #{projectId}\n" +
+            "ORDER BY\n" +
+            "\tproject_log.date DESC")
+    @Results(id="LogsResultMap",value={
+            @Result(property = "logId", column = "log_id"),
+            @Result(property = "date", column = "date"),
+            @Result(property = "userName", column = "NAME"),
+            @Result(property = "content", column = "content"),
+            @Result(property = "pics", column = "pics"),
+    })
+    List<HashMap<String,Object>> getLogs(Pagination pagination, @Param("projectId") Integer projectId);
 }

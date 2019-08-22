@@ -1,5 +1,6 @@
 package com.demo.project.common.persistence.service.serviceImpl;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.demo.project.common.persistence.template.modal.Project;
 import com.demo.project.common.persistence.template.modal.ProjectLog;
 import com.demo.project.common.persistence.dao.ProjectLogMapper;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  * <p>
@@ -24,6 +26,12 @@ public class ProjectLogServiceImpl extends ServiceImpl<ProjectLogMapper, Project
     @Override
     public Integer addLog(ProjectLog projectLog) {
         return projectLogMapper.addLog(projectLog);
+    }
+
+    @Override
+    public Page<HashMap<String, Object>> getLogs(Page<HashMap<String, Object>> pager, Integer projectId) {
+        Page<HashMap<String, Object>> page = new Page<>(pager.getCurrent(),pager.getSize());
+        return page.setRecords(projectLogMapper.getLogs(page,projectId));
     }
 
     @Autowired

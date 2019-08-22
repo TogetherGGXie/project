@@ -18,4 +18,5 @@ import java.util.List;
 public interface ProjectService extends IService<Project> {
     Page<HashMap<String, Object>> getProjects(Page<HashMap<String, Object>> pager, String keyword);
     List<HashMap<String, Object>> getProjectNames();
+    HashMap<String, Object> getProject(Integer projectId);
 }
