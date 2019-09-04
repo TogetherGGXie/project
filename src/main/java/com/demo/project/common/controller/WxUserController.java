@@ -45,19 +45,25 @@ public class WxUserController {
     @ApiOperation("修改用户名字")
     @ResponseBody
     @RequestMapping(value = "/editName", method = RequestMethod.POST)
-    public Boolean editName(@RequestParam(value = "newName", required = false) String newName,
+    public Object editName(@RequestParam(value = "newName", required = false) String newName,
                             HttpServletRequest request) {
+        HashMap<String, Object> map = new HashMap<>();
         WxUser wxUser = (WxUser) request.getSession().getAttribute("user");
-        if (wxUser==null)
-            return false;
-        System.out.println(wxUser.toString());
+        if (wxUser==null) {
+            map.put("code",1);
+            map.put("msg", "登录状态失效，请重启小程序");
+            return map;
+        }
         wxUser.setName(newName);
         System.out.println(wxUser.toString());
         if(wxUserService.updateById(wxUser)){
             request.getSession().setAttribute("user",wxUser);
-            return true;
-        } else
-            return false;
+            map.put("code",0);
+        } else {
+            map.put("code",1);
+            map.put("msg", "修改失败");
+        }
+        return map;
     }
 
     @ApiOperation("获取用户名字")
@@ -163,8 +169,8 @@ public class WxUserController {
                 wxUserService.insert(wxUser);
             }
             request.getSession().setAttribute("user",wxUser);
-            System.out.println(wxUser.toString());
-            System.out.println("session ="+request.getSession().getAttribute("user"));
+//            System.out.println(wxUser.toString());
+//            System.out.println("session ="+request.getSession().getAttribute("user"));
             map.put("sessionId",request.getSession().getId());
             map.put("authority",wxUser.getAuthority());
             map.put("userName",wxUser.getName());

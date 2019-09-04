@@ -56,7 +56,36 @@ public class Project implements Serializable {
      * 图片
      */
     private String img;
+    /**
+     * 创建时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @TableField("create_time")
+    private Date createTime;
+    /**
+     * 最近更新时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM- HH:mm:ss")
+    @TableField("last_upd_time")
+    private Date lastUpdTime;
 
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getLastUpdTime() {
+        return lastUpdTime;
+    }
+
+    public void setLastUpdTime(Date lastUpdTime) {
+        this.lastUpdTime = lastUpdTime;
+    }
 
     public Integer getProjectId() {
         return projectId;
@@ -109,12 +138,14 @@ public class Project implements Serializable {
     @Override
     public String toString() {
         return "Project{" +
-        ", projectId=" + projectId +
-        ", projectName=" + projectName +
-        ", leaderId=" + leaderId +
-        ", startTime=" + startTime +
-        ", endTime=" + endTime +
-        ", img=" + img +
-        "}";
+                "projectId=" + projectId +
+                ", projectName='" + projectName + '\'' +
+                ", leaderId=" + leaderId +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", img='" + img + '\'' +
+                ", createTime=" + createTime +
+                ", lastUpdTime=" + lastUpdTime +
+                '}';
     }
 }

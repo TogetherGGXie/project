@@ -52,6 +52,50 @@ public class ProjectLog implements Serializable {
      * 图片
      */
     private String pics;
+    /**
+     * 创建时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @TableField("create_time")
+    private Date createTime;
+    /**
+     * 最近更新时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM- HH:mm:ss")
+    @TableField("last_upd_time")
+    private Date lastUpdTime;
+
+    /**
+     * 浏览次数
+     */
+    @TableField("view_times")
+    private Integer viewTimes;
+
+    public Integer getViewTimes() {
+        return viewTimes;
+    }
+
+    public void setViewTimes(Integer viewTimes) {
+        this.viewTimes = viewTimes;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getLastUpdTime() {
+        return lastUpdTime;
+    }
+
+    public void setLastUpdTime(Date lastUpdTime) {
+        this.lastUpdTime = lastUpdTime;
+    }
 
     public Integer getLogId() {
         return logId;
@@ -102,6 +146,7 @@ public class ProjectLog implements Serializable {
     public void setPics(String pics) {
         this.pics = pics;
     }
+
     @Override
     public String toString() {
         return "ProjectLog{" +
@@ -111,7 +156,9 @@ public class ProjectLog implements Serializable {
                 ", date=" + date +
                 ", content='" + content + '\'' +
                 ", pics='" + pics + '\'' +
+                ", createTime=" + createTime +
+                ", lastUpdTime=" + lastUpdTime +
+                ", viewTimes=" + viewTimes +
                 '}';
     }
-
 }

@@ -1,0 +1,47 @@
+Manifest-Version: 1.0
+Class-Path: spring-data-jpa-2.0.9.RELEASE.jar spring-web-5.0.8.RELEASE
+ .jar spring-orm-5.0.8.RELEASE.jar mybatis-spring-1.3.1.jar mybatis-pl
+ us-generate-2.1.8.jar jconsole.jar jackson-datatype-jdk8-2.9.6.jar he
+ ssian-4.0.62.jar spring-boot-starter-websocket-2.0.4.RELEASE.jar spri
+ ng-jcl-5.0.8.RELEASE.jar hibernate-core-5.2.17.Final.jar springfox-sp
+ i-2.2.2.jar springfox-swagger2-2.2.2.jar swagger-models-1.5.3.jar slf
+ 4j-api-1.7.25.jar druid-1.1.3.jar spring-websocket-5.0.8.RELEASE.jar 
+ spring-boot-starter-web-2.0.4.RELEASE.jar spring-boot-starter-data-jp
+ a-2.0.4.RELEASE.jar hibernate-validator-6.0.11.Final.jar spring-tx-5.
+ 0.8.RELEASE.jar thymeleaf-spring5-3.0.9.RELEASE.jar jackson-annotatio
+ ns-2.9.0.jar dom4j-1.6.1.jar log4j-api-2.10.0.jar logback-core-1.2.3.
+ jar mybatis-plus-support-2.1.8.jar spring-expression-5.0.8.RELEASE.ja
+ r thymeleaf-3.0.9.RELEASE.jar attoparser-2.0.4.RELEASE.jar springfox-
+ schema-2.2.2.jar spring-boot-configuration-processor-2.0.4.RELEASE.ja
+ r spring-aspects-5.0.8.RELEASE.jar springfox-swagger-common-2.2.2.jar
+  spring-boot-starter-jdbc-2.0.4.RELEASE.jar mybatis-plus-core-2.1.8.j
+ ar jsqlparser-1.1.jar spring-messaging-5.0.8.RELEASE.jar javassist-3.
+ 22.0-GA.jar javax.transaction-api-1.2.jar springfox-core-2.2.2.jar to
+ ols.jar spring-beans-5.0.8.RELEASE.jar spring-boot-autoconfigure-2.0.
+ 4.RELEASE.jar spring-webmvc-5.0.8.RELEASE.jar commons-lang3-3.7.jar j
+ ul-to-slf4j-1.7.25.jar spring-boot-starter-logging-2.0.4.RELEASE.jar 
+ jackson-core-2.9.6.jar springfox-spring-web-2.2.2.jar mysql-connector
+ -java-5.1.46.jar spring-hateoas-0.25.0.RELEASE.jar spring-data-common
+ s-2.0.9.RELEASE.jar mybatisplus-spring-boot-starter-1.0.5.jar jboss-l
+ ogging-3.3.2.Final.jar spring-jdbc-5.0.8.RELEASE.jar thymeleaf-extras
+ -java8time-3.0.1.RELEASE.jar antlr-2.7.7.jar spring-boot-starter-tomc
+ at-2.0.4.RELEASE.jar jandex-2.0.3.Final.jar spring-boot-starter-thyme
+ leaf-2.0.4.RELEASE.jar validation-api-2.0.1.Final.jar spring-core-5.0
+ .8.RELEASE.jar mybatis-plus-2.1.8.jar mapstruct-1.0.0.CR1.jar mybatis
+ -spring-boot-autoconfigure-1.3.1.jar velocity-engine-core-2.0.jar spr
+ ing-plugin-core-1.2.0.RELEASE.jar snakeyaml-1.19.jar logback-classic-
+ 1.2.3.jar aspectjrt-1.8.13.jar HikariCP-2.7.9.jar jackson-datatype-js
+ r310-2.9.6.jar tomcat-embed-el-8.5.32.jar unbescape-1.1.5.RELEASE.jar
+  tomcat-embed-core-8.5.32.jar spring-boot-2.0.4.RELEASE.jar classmate
+ -1.3.4.jar tomcat-embed-websocket-8.5.32.jar spring-boot-starter-2.0.
+ 4.RELEASE.jar jackson-module-parameter-names-2.9.6.jar log4j-1.2.17.j
+ ar spring-aop-5.0.8.RELEASE.jar mybatis-3.4.5.jar hibernate-jpa-2.1-a
+ pi-1.0.2.Final.jar spring-boot-starter-aop-2.0.4.RELEASE.jar swagger-
+ annotations-1.5.3.jar spring-boot-starter-json-2.0.4.RELEASE.jar java
+ x.annotation-api-1.3.2.jar aspectjweaver-1.8.13.jar fastjson-1.2.44.j
+ ar log4j-to-slf4j-2.10.0.jar guava-18.0.jar spring-plugin-metadata-1.
+ 2.0.RELEASE.jar hibernate-commons-annotations-5.0.1.Final.jar mybatis
+ -spring-boot-starter-1.3.1.jar spring-context-5.0.8.RELEASE.jar jacks
+ on-databind-2.9.6.jar springfox-swagger-ui-2.2.2.jar
+Main-Class: com.demo.project.ProjectApplication
+

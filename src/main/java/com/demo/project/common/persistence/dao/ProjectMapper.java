@@ -36,8 +36,7 @@ public interface ProjectMapper extends BaseMapper<Project> {
             "WHERE\n" +
             "\twx_user.NAME REGEXP #{keyword} or project.project_name REGEXP #{keyword}" +
             "ORDER BY\n" +
-            "\tproject.start_time DESC,\n" +
-            "\tproject.project_id DESC")
+            "\tproject.create_time DESC")
     @Results(id="ProjectsResultMap",value={
             @Result(property = "projectId", column = "project_id"),
             @Result(property = "projectName", column = "project_name"),
@@ -55,10 +54,12 @@ public interface ProjectMapper extends BaseMapper<Project> {
             "\twx_user.NAME,\n" +
             "\tproject.start_time,\n" +
             "\tproject.end_time,\n" +
-            "\tproject.img \n" +
+            "\tproject.img,\n" +
+            "\tkeywords.keywords\n" +
             "FROM\n" +
             "\t`project`\n" +
             "\tJOIN wx_user ON project.leader_id = wx_user.user_id \n" +
+            "\tJOIN keywords ON project.project_id = keywords.project_id \n" +
             "WHERE\n" +
             "\tproject.project_id = #{projectId}")
     @Results(id="ProjectResultMap",value={
@@ -68,6 +69,7 @@ public interface ProjectMapper extends BaseMapper<Project> {
             @Result(property = "startTime", column = "start_time"),
             @Result(property = "endTime", column = "end_time"),
             @Result(property = "img", column = "img"),
+            @Result(property = "keywords", column = "keywords"),
     })
     HashMap<String,Object> getProject(@Param("projectId") Integer projectId);
 

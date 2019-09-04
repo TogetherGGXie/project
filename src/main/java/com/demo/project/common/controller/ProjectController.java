@@ -62,14 +62,13 @@ public class ProjectController {
             pageSize =10;
         if (keyword == null)
             keyword = "";
-        Page<HashMap<String, Object>> pager = projectService.getProjects(new Page<>(page,pageSize),keyword);
+        Page<HashMap<String, Object>> pager = projectService.getProjects(new Page<>(page,pageSize), keyword);
         return pager;
     }
 
     @ApiOperation("获取所有项目id和名字")
     @RequestMapping(value = "getProjectNames", method = RequestMethod.GET )
     public List<HashMap<String,Object>> getProjectNames() {
-
         return projectService.getProjectNames();
     }
 
@@ -77,7 +76,7 @@ public class ProjectController {
     @RequestMapping(value = "checkProjectName", method = RequestMethod.GET )
     public boolean checkProjectNames(@RequestParam(value = "projectName", required = false) String projectName) {
         Project project = projectService.selectOne(new EntityWrapper<Project>().eq("project_name",projectName));
-        if(project!=null)
+        if(project != null)
             return false;
         else
             return true;
@@ -85,34 +84,44 @@ public class ProjectController {
 
     @ApiOperation("发布项目")
     @RequestMapping(value = "addProject", method = RequestMethod.POST )
-    public Object addProject(@RequestParam("img") String pics,
+    public Object addProject(@RequestParam(value = "img", required = false) String pics,
                          @RequestParam(value = "startTime", required = false) String startTime,
                          @RequestParam(value = "endTime", required = false) String endTime,
                          @RequestParam("projectName") String projectName,
-                         HttpServletRequest request) {
+            HttpServletRequest request) {
+        HashMap<String, Object> map = new HashMap<>();
         WxUser wxUser = (WxUser) request.getSession().getAttribute("user");
         if (wxUser == null) {
-            return "登录状态失效，请重新打开";
+            map.put("code",1);
+            map.put("msg", "登录状态失效，请重启小程序");
+        }else if (wxUser.getAuthority() < 2) {
+            map.put("code",1);
+            map.put("msg", "权限不足，请确认后重试");
+        }else {
+            DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
+            Date start = null;
+            Date end = null;
+            try{
+                if (startTime != null && startTime!= "")
+                    start = dateFormat.parse(startTime);
+                if (endTime != null && endTime!= "")
+                    end = dateFormat.parse(endTime);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            Project project = new Project();
+            project.setProjectName(projectName);
+            project.setLeaderId(wxUser.getUserId());
+            project.setStartTime(start);
+            project.setEndTime(end);
+            project.setImg(pics);
+            project.setCreateTime(new Date());
+            project.setLastUpdTime(new Date());
+            projectService.insert(project);
+            map.put("projectId", project.getProjectId());
+            map.put("code", 0);
         }
-        DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
-        Date start = null;
-        Date end = null;
-        try{
-            if (startTime != null && startTime!= "")
-                start = dateFormat.parse(startTime);
-            if (endTime != null && endTime!= "")
-                end = dateFormat.parse(endTime);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        Project project = new Project();
-        project.setProjectName(projectName);
-        project.setLeaderId(wxUser.getUserId());
-        project.setStartTime(start);
-        project.setEndTime(end);
-        project.setImg(pics);
-        projectService.insert(project);
-        return project.getProjectId();
+        return map;
     }
 
 //    @RequestMapping(value="/testuploadimg", method = RequestMethod.POST)

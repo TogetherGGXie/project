@@ -10,6 +10,9 @@
         <result column="date" property="date" />
         <result column="content" property="content" />
         <result column="pics" property="pics" />
+        <result column="create_time" property="createTime" />
+        <result column="last_upd_time" property="lastUpdTime" />
+        <result column="view_times" property="viewTimes" />
     </resultMap>
 
 </mapper>

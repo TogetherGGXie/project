@@ -10,6 +10,8 @@
         <result column="start_time" property="startTime" />
         <result column="end_time" property="endTime" />
         <result column="img" property="img" />
+        <result column="create_time" property="createTime" />
+        <result column="last_upd_time" property="lastUpdTime" />
     </resultMap>
 
 </mapper>
