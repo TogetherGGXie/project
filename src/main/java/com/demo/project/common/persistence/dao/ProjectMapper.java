@@ -59,7 +59,7 @@ public interface ProjectMapper extends BaseMapper<Project> {
             "FROM\n" +
             "\t`project`\n" +
             "\tJOIN wx_user ON project.leader_id = wx_user.user_id \n" +
-            "\tJOIN keywords ON project.project_id = keywords.project_id \n" +
+            "\tLEFT JOIN keywords ON project.project_id = keywords.project_id \n" +
             "WHERE\n" +
             "\tproject.project_id = #{projectId}")
     @Results(id="ProjectResultMap",value={
