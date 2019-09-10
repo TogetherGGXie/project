@@ -42,6 +42,7 @@ public class ProjectController {
     @Autowired
     private GroupService groupService;
 
+
     @Value("${web.upload-path}")
     private String path;
 
@@ -53,6 +54,10 @@ public class ProjectController {
         if (wxUser == null) {
             map.put("code",1);
             map.put("msg","登录状态失效，请重新启动小程序");
+            return map;
+        }else if (wxUser.getStatus() == 0) {
+            map.put("code",3);
+            map.put("msg","您的账号未激活，请与管理员联系");
             return map;
         }else if (groupService.selectOne(new EntityWrapper<Group>().eq("project_id",pid)
                 .eq("user_id",wxUser.getUserId())) != null
@@ -80,6 +85,10 @@ public class ProjectController {
         if (wxUser == null) {
             map.put("code",1);
             map.put("msg","登录状态失效，请重新启动小程序");
+            return map;
+        }else if (wxUser.getStatus() == 0) {
+            map.put("code",3);
+            map.put("msg","您的账号未激活，请与管理员联系");
             return map;
         }
         if(page == null )
@@ -118,6 +127,7 @@ public class ProjectController {
                          @RequestParam(value = "startTime", required = false) String startTime,
                          @RequestParam(value = "endTime", required = false) String endTime,
                          @RequestParam("projectName") String projectName,
+                         @RequestParam(value = "userList", required = false) List<Integer> userList,
                          HttpServletRequest request) {
         HashMap<String, Object> map = new HashMap<>();
         WxUser wxUser = (WxUser) request.getSession().getAttribute("user");
@@ -127,6 +137,10 @@ public class ProjectController {
         }else if (wxUser.getAuthority() < 2) {
             map.put("code",2);
             map.put("msg", "权限不足，请确认后重试");
+        }else if (wxUser.getStatus() == 0) {
+            map.put("code",3);
+            map.put("msg","您的账号未激活，请与管理员联系");
+            return map;
         }else {
             DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
             Date start = null;
@@ -148,6 +162,9 @@ public class ProjectController {
             project.setCreateTime(new Date());
             project.setLastUpdTime(new Date());
             projectService.insert(project);
+            if (userList!=null) {
+                groupService.addStaffs(project.getProjectId(), userList);
+            }
             map.put("projectId", project.getProjectId());
             map.put("code", 0);
         }

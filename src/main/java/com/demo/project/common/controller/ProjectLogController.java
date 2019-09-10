@@ -69,6 +69,10 @@ public class ProjectLogController {
             map.put("code",1);
             map.put("msg", "登录状态失效，请重启小程序");
             return  map;
+        }else if (wxUser.getStatus() == 0) {
+            map.put("code",3);
+            map.put("msg","您的账号未激活，请与管理员联系");
+            return map;
         }
         DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
         Date createDate = null;
@@ -119,6 +123,10 @@ public class ProjectLogController {
                 && (projectService.selectById(projectId).getLeaderId() != wxUser.getUserId())) {
             map.put("code",2);
             map.put("msg","您暂无查看此项目的权限，请与管理员联系");
+            return map;
+        }else if (wxUser.getStatus() == 0) {
+            map.put("code",3);
+            map.put("msg","您的账号未激活，请与管理员联系");
             return map;
         }else {
             if (page == null)

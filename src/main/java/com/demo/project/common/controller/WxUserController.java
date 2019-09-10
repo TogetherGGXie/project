@@ -48,10 +48,12 @@ public class WxUserController {
     @Autowired
     private OrganizationService organizationService;
 
-    @ApiOperation("修改用户名字")
+    @ApiOperation("修改用户信息")
     @ResponseBody
-    @RequestMapping(value = "/editName", method = RequestMethod.POST)
+    @RequestMapping(value = "/editInfo", method = RequestMethod.POST)
     public Object editName(@RequestParam(value = "newName", required = false) String newName,
+                           @RequestParam(value = "authority", required = false) Integer authority,
+                           @RequestParam(value = "organization_id", required = false) Integer organization_id,
                             HttpServletRequest request) {
         HashMap<String, Object> map = new HashMap<>();
         WxUser wxUser = (WxUser) request.getSession().getAttribute("user");
@@ -60,7 +62,17 @@ public class WxUserController {
             map.put("msg", "登录状态失效，请重启小程序");
             return map;
         }
-        wxUser.setName(newName);
+        if (newName != null && newName != "" && !newName.equals(""))
+            wxUser.setName(newName);
+        if (authority != null) {
+            wxUser.setAuthority(authority);
+            wxUser.setStatus(0);
+        }
+        if (organization_id != null) {
+            wxUser.setOrganizationId(organization_id);
+            wxUser.setStatus(0);
+        }
+
         System.out.println(wxUser.toString());
         if(wxUserService.updateById(wxUser)){
             request.getSession().setAttribute("user",wxUser);
@@ -92,7 +104,7 @@ public class WxUserController {
         Map map = new HashMap();
         //登录凭证不能为空
         if (code == null || code.length() == 0) {
-            map.put("status", 0);
+            map.put("code", 0);
             map.put("msg", "code 不能为空");
             return map;
         }
@@ -170,8 +182,9 @@ public class WxUserController {
             WxUser wxUser = wxUserService.selectOne(new EntityWrapper<WxUser>().eq("open_id",mapper.get("openid")));;
             if (wxUser == null){
                 wxUser = new WxUser();
-                wxUser.setAuthority(1);
+                wxUser.setAuthority(0);
                 wxUser.setOpenId(mapper.get("openid").toString());
+                wxUser.setStatus(0);
                 wxUserService.insert(wxUser);
             }
             request.getSession().setAttribute("user",wxUser);
@@ -180,12 +193,11 @@ public class WxUserController {
             map.put("sessionId",request.getSession().getId());
             map.put("authority",wxUser.getAuthority());
             map.put("userName",wxUser.getName());
+            map.put("status", wxUser.getStatus());
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        map.put("status", 0);
-//        map.put("msg", "解密失败");
+        map.put("code", 0);
         return map;
     }
 
@@ -193,7 +205,7 @@ public class WxUserController {
     @RequestMapping(value = "getUsers", method = RequestMethod.GET)
     @ResponseBody
     public List<Map<String, Object>> getUsers(@RequestParam(value = "oid") Integer oid) {
-        return wxUserService.selectMaps(new EntityWrapper<WxUser>().setSqlSelect("user_id,name,authority,organization_id").eq("organization_id", oid));
+        return wxUserService.selectMaps(new EntityWrapper<WxUser>().setSqlSelect("user_id,name,authority,organization_id").eq("organization_id", oid).eq("status",1));
     }
 
     @ApiOperation("获取部门及子部门的用户")
@@ -207,14 +219,14 @@ public class WxUserController {
             if(ids.contains(organization.get("pid")))
                 ids.add((Integer)organization.get("id"));
         }
-        return wxUserService.selectMaps(new EntityWrapper<WxUser>().setSqlSelect("user_id,name,authority,organization_id").in("organization_id",ids));
+        return wxUserService.selectMaps(new EntityWrapper<WxUser>().setSqlSelect("user_id,name,authority,organization_id").in("organization_id",ids).eq("status",1));
     }
 
     @ApiOperation("获取所有用户")
     @RequestMapping(value = "getAllUsers", method = RequestMethod.GET)
     @ResponseBody
     public List<Map<String, Object>> getAllUsers() {
-        return wxUserService.selectMaps(new EntityWrapper<WxUser>().setSqlSelect("user_id,name,authority,organization_id"));
+        return wxUserService.selectMaps(new EntityWrapper<WxUser>().setSqlSelect("user_id,name,authority,organization_id").eq("status",1));
     }
 }
 

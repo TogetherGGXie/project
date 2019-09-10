@@ -45,6 +45,10 @@ public class ViewStatisController {
         if(wxUser == null){
             map.put("code", 1);
             map.put("msg", "登录状态失效，请重启小程序");
+        }else if (wxUser.getStatus() == 0) {
+            map.put("code",3);
+            map.put("msg","您的账号未激活，请与管理员联系");
+            return map;
         }else {
             ViewStatis viewStatis = new ViewStatis();
             viewStatis.setLogId(logId);

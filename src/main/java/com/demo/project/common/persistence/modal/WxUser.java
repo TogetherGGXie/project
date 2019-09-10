@@ -50,7 +50,11 @@ public class WxUser implements Serializable {
      * 部门id
      */
     @TableField("organization_id")
-    private String organizationId;
+    private Integer organizationId;
+    /**
+     * 账号状态
+     */
+    private Integer status;
 
 
     public Integer getUserId() {
@@ -81,6 +85,14 @@ public class WxUser implements Serializable {
         return nickname;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
@@ -101,24 +113,25 @@ public class WxUser implements Serializable {
         this.authority = authority;
     }
 
-    public String getOrganizationId() {
+    public Integer getOrganizationId() {
         return organizationId;
     }
 
-    public void setOrganizationId(String organizationId) {
+    public void setOrganizationId(Integer organizationId) {
         this.organizationId = organizationId;
     }
 
     @Override
     public String toString() {
         return "WxUser{" +
-        ", userId=" + userId +
-        ", openId=" + openId +
-        ", name=" + name +
-        ", nickname=" + nickname +
-        ", headImage=" + headImage +
-        ", authority=" + authority +
-        ", organizationId=" + organizationId +
-        "}";
+                "userId=" + userId +
+                ", openId='" + openId + '\'' +
+                ", name='" + name + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", headImage='" + headImage + '\'' +
+                ", authority=" + authority +
+                ", organizationId='" + organizationId + '\'' +
+                ", status=" + status +
+                '}';
     }
 }

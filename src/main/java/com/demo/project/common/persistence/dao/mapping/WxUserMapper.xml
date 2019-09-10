@@ -11,6 +11,7 @@
         <result column="head_image" property="headImage" />
         <result column="authority" property="authority" />
         <result column="organization_id" property="organizationId" />
+        <result column="status" property="status" />
     </resultMap>
 
 </mapper>

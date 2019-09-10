@@ -11,7 +11,7 @@
  Target Server Version : 50720
  File Encoding         : 65001
 
- Date: 10/09/2019 15:11:19
+ Date: 10/09/2019 15:36:39
 */
 
 SET NAMES utf8mb4;
@@ -223,14 +223,15 @@ CREATE TABLE `wx_user`  (
   `head_image` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '头像',
   `authority` int(1) NULL DEFAULT 1 COMMENT '权限',
   `organization_id` int(10) NULL DEFAULT NULL COMMENT '部门id',
+  `status` int(1) NULL DEFAULT 0 COMMENT '账号状态不可用为0，可用为1',
   PRIMARY KEY (`user_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of wx_user
 -- ----------------------------
-INSERT INTO `wx_user` VALUES (1, '123123123', '一二三四', '1231', '123123', 1, 2);
-INSERT INTO `wx_user` VALUES (2, '456456456', '456', '456456', '456456', 1, 2);
-INSERT INTO `wx_user` VALUES (3, 'o5N0c5P1V0c5-mPwc2QxAe_-oBMo', '哈哈哈', NULL, NULL, 2, 3);
+INSERT INTO `wx_user` VALUES (1, '123123123', '一二三四', '1231', '123123', 1, 2, 1);
+INSERT INTO `wx_user` VALUES (2, '456456456', '456', '456456', '456456', 1, 2, 1);
+INSERT INTO `wx_user` VALUES (3, 'o5N0c5P1V0c5-mPwc2QxAe_-oBMo', '哈哈哈', NULL, NULL, 2, 3, 1);
 
 SET FOREIGN_KEY_CHECKS = 1;
