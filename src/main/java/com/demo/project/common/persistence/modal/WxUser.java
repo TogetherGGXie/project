@@ -47,9 +47,10 @@ public class WxUser implements Serializable {
      */
     private Integer authority;
     /**
-     * 手机号
+     * 部门id
      */
-    private String phone;
+    @TableField("organization_id")
+    private String organizationId;
 
 
     public Integer getUserId() {
@@ -100,12 +101,12 @@ public class WxUser implements Serializable {
         this.authority = authority;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getOrganizationId() {
+        return organizationId;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setOrganizationId(String organizationId) {
+        this.organizationId = organizationId;
     }
 
     @Override
@@ -117,7 +118,7 @@ public class WxUser implements Serializable {
         ", nickname=" + nickname +
         ", headImage=" + headImage +
         ", authority=" + authority +
-        ", phone=" + phone +
+        ", organizationId=" + organizationId +
         "}";
     }
 }

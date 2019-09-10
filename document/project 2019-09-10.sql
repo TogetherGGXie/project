@@ -11,7 +11,7 @@
  Target Server Version : 50720
  File Encoding         : 65001
 
- Date: 10/09/2019 09:42:11
+ Date: 10/09/2019 15:11:19
 */
 
 SET NAMES utf8mb4;
@@ -175,18 +175,18 @@ INSERT INTO `project_log` VALUES (39, 10, 3, '2019-08-21', '13', '', '2019-09-02
 INSERT INTO `project_log` VALUES (40, 10, 3, '2019-08-21', 'qwe', '', '2019-09-02 15:12:12', '2019-09-02 15:13:01', 0);
 INSERT INTO `project_log` VALUES (41, 13, 3, '2019-08-21', '123', '', '2019-09-02 15:12:13', '2019-09-02 15:13:01', 0);
 INSERT INTO `project_log` VALUES (42, 10, 3, '2019-08-22', '213', 'projectLog/a14ce8b1d1fc4f47953750b2ffb51f0c.png,projectLog/b77e1a51fc1043a8915b0c82718687d5.png,projectLog/bbac43db00a24b4bbbe97e4a3e84850a.png,projectLog/a14ce8b1d1fc4f47953750b2ffb51f0c.png', '2019-09-02 15:12:14', '2019-09-06 16:38:42', 0);
-INSERT INTO `project_log` VALUES (43, 15, 3, '2019-08-22', 'asdf', 'projectLog/ea84e70f943a447caacf4405af32a732.png projectLog/0fd1207f0f4e46e8b4e591d0fb1600f1.png,projectLog/aaaeac5ca17e4a6a8c924deb65822208.png', '2019-09-02 15:12:15', '2019-09-06 10:10:35', 0);
-INSERT INTO `project_log` VALUES (44, 15, 3, '2019-08-22', '123', '', '2019-09-02 15:12:16', '2019-09-02 15:13:01', 0);
+INSERT INTO `project_log` VALUES (43, 15, 3, '2019-08-22', 'asdf', 'projectLog/ea84e70f943a447caacf4405af32a732.png projectLog/0fd1207f0f4e46e8b4e591d0fb1600f1.png,projectLog/aaaeac5ca17e4a6a8c924deb65822208.png', '2019-09-02 15:12:15', '2019-09-10 14:15:53', 1);
+INSERT INTO `project_log` VALUES (44, 15, 3, '2019-08-22', '123', '', '2019-09-02 15:12:16', '2019-09-10 14:16:20', 1);
 INSERT INTO `project_log` VALUES (45, 14, 3, '2019-08-22', '123', '', '2019-09-02 15:12:17', '2019-09-02 15:13:01', 0);
-INSERT INTO `project_log` VALUES (46, 15, 3, '2019-08-22', '1231', '', '2019-09-02 15:12:18', '2019-09-02 15:13:01', 0);
+INSERT INTO `project_log` VALUES (46, 15, 3, '2019-08-22', '1231', '', '2019-09-02 15:12:18', '2019-09-10 14:12:44', 1);
 INSERT INTO `project_log` VALUES (47, 15, 3, '2019-08-22', '111', '', '2019-09-02 15:12:19', '2019-09-02 15:13:01', 0);
 INSERT INTO `project_log` VALUES (48, 15, 3, '2019-08-22', '666', '', '2019-09-02 15:12:20', '2019-09-02 15:13:01', 0);
 INSERT INTO `project_log` VALUES (49, 15, 3, '2019-08-22', '222', '', '2019-09-02 15:12:22', '2019-09-02 15:13:01', 0);
-INSERT INTO `project_log` VALUES (50, 15, 3, '2019-08-22', '999', '', '2019-09-02 15:12:23', '2019-09-02 15:13:01', 0);
+INSERT INTO `project_log` VALUES (50, 15, 3, '2019-08-22', '999', '', '2019-09-02 15:12:23', '2019-09-10 14:15:37', 1);
 INSERT INTO `project_log` VALUES (51, 11, 3, '2019-08-23', '请问555', 'projectLog/8bf15f64012949dba135914a92275f14.png,projectLog/9a3c131eb2e6432d81b7fc85acb53cc9.png,projectLog/7f753aeee72348e697c487b8f8ab1918.png', '2019-09-02 15:12:24', '2019-09-06 10:10:25', 0);
 INSERT INTO `project_log` VALUES (52, 17, 3, '2019-08-23', '555623', 'projectLog/932f4281a4ec4a24bc721201f8f6e621.png', '2019-09-02 15:12:25', '2019-09-02 15:13:01', 0);
-INSERT INTO `project_log` VALUES (53, 19, 3, '2019-09-12', '21123123213123', '', '2019-09-02 15:12:26', '2019-09-02 15:13:02', 0);
-INSERT INTO `project_log` VALUES (54, 19, 3, '2019-09-03', '程序员(英文Programmer)是从事程序开发、维护的专业人员。一般将程序员分为程序设计人员和程序编码人员，但两者的界限并不非常清楚，特别是在中国。软件从业人员分为初级程序员、高级程序员、系统分析员和项目经理四大类。', '', '2019-09-03 13:57:16', '2019-09-03 13:57:16', 0);
+INSERT INTO `project_log` VALUES (53, 19, 3, '2019-09-12', '21123123213123', '', '2019-09-02 15:12:26', '2019-09-10 13:46:33', 1);
+INSERT INTO `project_log` VALUES (54, 19, 3, '2019-09-03', '程序员(英文Programmer)是从事程序开发、维护的专业人员。一般将程序员分为程序设计人员和程序编码人员，但两者的界限并不非常清楚，特别是在中国。软件从业人员分为初级程序员、高级程序员、系统分析员和项目经理四大类。', '', '2019-09-03 13:57:16', '2019-09-10 13:30:14', 1);
 
 -- ----------------------------
 -- Table structure for view_statis
@@ -203,8 +203,13 @@ CREATE TABLE `view_statis`  (
 -- ----------------------------
 INSERT INTO `view_statis` VALUES (51, 1, '2019-08-29 16:54:27');
 INSERT INTO `view_statis` VALUES (51, 2, '2019-09-03 13:12:37');
-INSERT INTO `view_statis` VALUES (53, 2, '2019-09-03 13:12:31');
-INSERT INTO `view_statis` VALUES (53, 1, '2019-09-02 16:51:24');
+INSERT INTO `view_statis` VALUES (53, 3, '2019-09-10 13:57:52');
+INSERT INTO `view_statis` VALUES (53, 3, '2019-09-10 13:57:52');
+INSERT INTO `view_statis` VALUES (54, 3, '2019-09-10 14:03:22');
+INSERT INTO `view_statis` VALUES (46, 3, NULL);
+INSERT INTO `view_statis` VALUES (50, 3, '2019-09-10 14:15:38');
+INSERT INTO `view_statis` VALUES (43, 3, '2019-09-10 14:15:54');
+INSERT INTO `view_statis` VALUES (44, 3, '2019-09-10 14:16:21');
 
 -- ----------------------------
 -- Table structure for wx_user
@@ -217,15 +222,15 @@ CREATE TABLE `wx_user`  (
   `nickname` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '昵称',
   `head_image` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '头像',
   `authority` int(1) NULL DEFAULT 1 COMMENT '权限',
-  `phone` char(11) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '手机号',
+  `organization_id` int(10) NULL DEFAULT NULL COMMENT '部门id',
   PRIMARY KEY (`user_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of wx_user
 -- ----------------------------
-INSERT INTO `wx_user` VALUES (1, '123123123', '一二三四', '1231', '123123', 1, '12331313');
-INSERT INTO `wx_user` VALUES (2, '456456456', '456', '456456', '456456', 1, '123314444');
-INSERT INTO `wx_user` VALUES (3, 'o5N0c5P1V0c5-mPwc2QxAe_-oBMo', '哈哈哈', NULL, NULL, 2, NULL);
+INSERT INTO `wx_user` VALUES (1, '123123123', '一二三四', '1231', '123123', 1, 2);
+INSERT INTO `wx_user` VALUES (2, '456456456', '456', '456456', '456456', 1, 2);
+INSERT INTO `wx_user` VALUES (3, 'o5N0c5P1V0c5-mPwc2QxAe_-oBMo', '哈哈哈', NULL, NULL, 2, 3);
 
 SET FOREIGN_KEY_CHECKS = 1;

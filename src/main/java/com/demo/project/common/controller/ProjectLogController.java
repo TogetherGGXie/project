@@ -10,6 +10,7 @@ import com.demo.project.common.persistence.service.ProjectLogService;
 import com.demo.project.common.persistence.modal.Keywords;
 import com.demo.project.common.persistence.modal.ProjectLog;
 import com.demo.project.common.persistence.modal.WxUser;
+import com.demo.project.common.persistence.service.ProjectService;
 import com.hankcs.hanlp.HanLP;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -50,6 +51,9 @@ public class ProjectLogController {
 
     @Autowired
     private GroupService groupService;
+
+    @Autowired
+    private ProjectService projectService;
 
     @ApiOperation(value = "添加日志")
     @RequestMapping(value = "/addLog", method = RequestMethod.POST)
@@ -111,7 +115,8 @@ public class ProjectLogController {
             map.put("msg","登录状态失效，请重新启动小程序");
             return map;
         }else if (groupService.selectOne(new EntityWrapper<Group>().eq("project_id",projectId)
-                .eq("user_id",wxUser.getUserId())) == null) {
+                .eq("user_id",wxUser.getUserId())) == null
+                && (projectService.selectById(projectId).getLeaderId() != wxUser.getUserId())) {
             map.put("code",2);
             map.put("msg","您暂无查看此项目的权限，请与管理员联系");
             return map;

@@ -1,6 +1,7 @@
 package com.demo.project.common.controller;
 
 
+import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.demo.project.common.persistence.service.ProjectLogService;
 import com.demo.project.common.persistence.service.ViewStatisService;
@@ -35,8 +36,9 @@ public class ViewStatisController {
     private ProjectLogService projectLogService;
 
     @ApiOperation("添加浏览记录")
-    @RequestMapping(value = "/addView",method = RequestMethod.POST)
-    public Object addView(@RequestParam(name = "logId") Integer logId,
+    @RequestMapping(value = "/addView", method = RequestMethod.POST)
+    @ResponseBody
+    public Object addView(@RequestParam("logId") Integer logId,
                           HttpServletRequest request) {
         HashMap<String,Object> map = new HashMap<>();
         WxUser wxUser = (WxUser) request.getSession().getAttribute("user");
@@ -47,10 +49,12 @@ public class ViewStatisController {
             ViewStatis viewStatis = new ViewStatis();
             viewStatis.setLogId(logId);
             viewStatis.setUserId(wxUser.getUserId());
-            ViewStatis vs = viewStatisService.selectOne(new EntityWrapper<ViewStatis>().eq("logId",logId).eq("userId",wxUser.getUserId()));
-            if(vs != null)
+            ViewStatis vs = viewStatisService.selectOne(new EntityWrapper<ViewStatis>().eq("log_id",logId).eq("user_id",wxUser.getUserId()));
+            if(vs != null) {
                 viewStatisService.insertOrUpdate(viewStatis);
+            }
             else {
+                viewStatis.setViewTime(DateUtil.date());
                 viewStatisService.insertOrUpdate(viewStatis);
                 projectLogService.updateViewTimes(logId);
             }

@@ -55,7 +55,8 @@ public class ProjectController {
             map.put("msg","登录状态失效，请重新启动小程序");
             return map;
         }else if (groupService.selectOne(new EntityWrapper<Group>().eq("project_id",pid)
-                .eq("user_id",wxUser.getUserId())) != null) {
+                .eq("user_id",wxUser.getUserId())) != null
+                    || (projectService.selectById(pid).getLeaderId() == wxUser.getUserId())) {
             map.put("code",0);
             map.put("project",projectService.getProject(Integer.valueOf(pid)));
             return map;

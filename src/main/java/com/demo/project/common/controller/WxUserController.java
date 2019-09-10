@@ -3,6 +3,8 @@ package com.demo.project.common.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.demo.project.common.persistence.modal.Organization;
+import com.demo.project.common.persistence.service.OrganizationService;
 import com.demo.project.common.persistence.service.WxUserService;
 import com.demo.project.common.persistence.modal.WxUser;
 import io.swagger.annotations.Api;
@@ -22,7 +24,9 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,6 +44,10 @@ public class WxUserController {
 
     @Autowired
     private WxUserService wxUserService;
+
+    @Autowired
+    private OrganizationService organizationService;
+
     @ApiOperation("修改用户名字")
     @ResponseBody
     @RequestMapping(value = "/editName", method = RequestMethod.POST)
@@ -181,6 +189,32 @@ public class WxUserController {
         return map;
     }
 
+    @ApiOperation("获取部门的用户")
+    @RequestMapping(value = "getUsers", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Map<String, Object>> getUsers(@RequestParam(value = "oid") Integer oid) {
+        return wxUserService.selectMaps(new EntityWrapper<WxUser>().setSqlSelect("user_id,name,authority,organization_id").eq("organization_id", oid));
+    }
 
+    @ApiOperation("获取部门及子部门的用户")
+    @RequestMapping(value = "getUsers1", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Map<String, Object>> getUsers1(@RequestParam(value = "oid") Integer oid) {
+        List<Map<String, Object>> oids = organizationService.selectMaps(new EntityWrapper<Organization>().setSqlSelect("id,pid").orderBy("id"));
+        List<Integer> ids = new ArrayList<>();
+        ids.add(oid);
+        for(Map<String, Object> organization : oids) {
+            if(ids.contains(organization.get("pid")))
+                ids.add((Integer)organization.get("id"));
+        }
+        return wxUserService.selectMaps(new EntityWrapper<WxUser>().setSqlSelect("user_id,name,authority,organization_id").in("organization_id",ids));
+    }
+
+    @ApiOperation("获取所有用户")
+    @RequestMapping(value = "getAllUsers", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Map<String, Object>> getAllUsers() {
+        return wxUserService.selectMaps(new EntityWrapper<WxUser>().setSqlSelect("user_id,name,authority,organization_id"));
+    }
 }
 

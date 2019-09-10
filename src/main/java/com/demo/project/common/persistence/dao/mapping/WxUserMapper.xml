@@ -10,7 +10,7 @@
         <result column="nickname" property="nickname" />
         <result column="head_image" property="headImage" />
         <result column="authority" property="authority" />
-        <result column="phone" property="phone" />
+        <result column="organization_id" property="organizationId" />
     </resultMap>
 
 </mapper>
