@@ -1,4 +1,4 @@
-package com.demo.project.common.persistence.template.modal;
+package com.demo.project.common.persistence.modal;
 
 import com.baomidou.mybatisplus.enums.IdType;
 import com.baomidou.mybatisplus.annotations.TableId;
@@ -11,7 +11,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author XieZhiyang123
- * @since 2019-09-06
+ * @since 2019-09-09
  */
 @TableName("organization")
 public class Organization implements Serializable {

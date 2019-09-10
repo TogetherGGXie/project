@@ -1,6 +1,6 @@
 package com.demo.project.common.persistence.service;
 
-import com.demo.project.common.persistence.template.modal.Keywords;
+import com.demo.project.common.persistence.modal.Keywords;
 import com.baomidou.mybatisplus.service.IService;
 
 /**

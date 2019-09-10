@@ -1,6 +1,6 @@
 package com.demo.project.common.persistence.service;
 
-import com.demo.project.common.persistence.template.modal.Organization;
+import com.demo.project.common.persistence.modal.Organization;
 import com.baomidou.mybatisplus.service.IService;
 
 /**
@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.service.IService;
  * </p>
  *
  * @author XieZhiyang123
- * @since 2019-09-06
+ * @since 2019-09-09
  */
 public interface OrganizationService extends IService<Organization> {
 

@@ -1,6 +1,6 @@
 package com.demo.project.common.persistence.service;
 
-import com.demo.project.common.persistence.template.modal.WxUser;
+import com.demo.project.common.persistence.modal.WxUser;
 import com.baomidou.mybatisplus.service.IService;
 
 /**

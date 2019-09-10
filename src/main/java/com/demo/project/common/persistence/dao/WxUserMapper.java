@@ -1,6 +1,6 @@
 package com.demo.project.common.persistence.dao;
 
-import com.demo.project.common.persistence.template.modal.WxUser;
+import com.demo.project.common.persistence.modal.WxUser;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import org.springframework.stereotype.Repository;
 

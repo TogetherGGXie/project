@@ -1,13 +1,11 @@
 package com.demo.project.common.persistence.dao;
 
 import com.baomidou.mybatisplus.plugins.pagination.Pagination;
-import com.demo.project.common.persistence.template.modal.ProjectLog;
+import com.demo.project.common.persistence.modal.ProjectLog;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 

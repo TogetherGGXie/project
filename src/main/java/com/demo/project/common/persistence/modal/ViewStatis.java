@@ -1,4 +1,4 @@
-package com.demo.project.common.persistence.template.modal;
+package com.demo.project.common.persistence.modal;
 
 import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableId;

@@ -1,15 +1,13 @@
 package com.demo.project.common.persistence.service.serviceImpl;
 
 import com.baomidou.mybatisplus.plugins.Page;
-import com.demo.project.common.persistence.template.modal.Project;
-import com.demo.project.common.persistence.template.modal.ProjectLog;
+import com.demo.project.common.persistence.modal.ProjectLog;
 import com.demo.project.common.persistence.dao.ProjectLogMapper;
 import com.demo.project.common.persistence.service.ProjectLogService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 

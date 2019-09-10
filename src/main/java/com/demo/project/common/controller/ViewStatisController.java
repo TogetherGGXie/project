@@ -4,8 +4,8 @@ package com.demo.project.common.controller;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.demo.project.common.persistence.service.ProjectLogService;
 import com.demo.project.common.persistence.service.ViewStatisService;
-import com.demo.project.common.persistence.template.modal.ViewStatis;
-import com.demo.project.common.persistence.template.modal.WxUser;
+import com.demo.project.common.persistence.modal.ViewStatis;
+import com.demo.project.common.persistence.modal.WxUser;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@ public class ViewStatisController {
 
     @ApiOperation("添加浏览记录")
     @RequestMapping(value = "/addView",method = RequestMethod.POST)
-    public Object addView(@RequestParam(name = "logId")Integer logId,
+    public Object addView(@RequestParam(name = "logId") Integer logId,
                           HttpServletRequest request) {
         HashMap<String,Object> map = new HashMap<>();
         WxUser wxUser = (WxUser) request.getSession().getAttribute("user");

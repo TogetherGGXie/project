@@ -3,7 +3,7 @@
 <mapper namespace="com.demo.project.common.persistence.dao.WxUserMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.demo.project.common.persistence.template.modal.WxUser">
+    <resultMap id="BaseResultMap" type="com.demo.project.common.persistence.modal.WxUser">
         <id column="user_id" property="userId" />
         <result column="open_id" property="openId" />
         <result column="name" property="name" />

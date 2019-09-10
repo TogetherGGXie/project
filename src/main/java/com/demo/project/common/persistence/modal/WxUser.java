@@ -1,4 +1,4 @@
-package com.demo.project.common.persistence.template.modal;
+package com.demo.project.common.persistence.modal;
 
 import com.baomidou.mybatisplus.enums.IdType;
 import com.baomidou.mybatisplus.annotations.TableId;

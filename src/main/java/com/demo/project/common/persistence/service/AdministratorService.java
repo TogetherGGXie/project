@@ -1,6 +1,6 @@
 package com.demo.project.common.persistence.service;
 
-import com.demo.project.common.persistence.template.modal.Administrator;
+import com.demo.project.common.persistence.modal.Administrator;
 import com.baomidou.mybatisplus.service.IService;
 
 /**

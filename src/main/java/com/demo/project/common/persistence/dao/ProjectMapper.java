@@ -1,7 +1,7 @@
 package com.demo.project.common.persistence.dao;
 
 import com.baomidou.mybatisplus.plugins.pagination.Pagination;
-import com.demo.project.common.persistence.template.modal.Project;
+import com.demo.project.common.persistence.modal.Project;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
@@ -34,8 +34,10 @@ public interface ProjectMapper extends BaseMapper<Project> {
             "\t`project`\n" +
             "\tJOIN wx_user ON project.leader_id = wx_user.user_id \n" +
             "WHERE\n" +
-            "\twx_user.NAME REGEXP #{keyword} or project.project_name REGEXP #{keyword}" +
-            "ORDER BY\n" +
+            "\t(wx_user.NAME REGEXP #{keyword} or project.project_name REGEXP #{keyword}) \n" +
+            "\tand project.project_id in (SELECT project_id FROM groups where groups.user_id = #{userId}) \n" +
+            "\tor project.leader_id = #{userId} \n" +
+            "\tORDER BY\n" +
             "\tproject.create_time DESC")
     @Results(id="ProjectsResultMap",value={
             @Result(property = "projectId", column = "project_id"),
@@ -45,7 +47,7 @@ public interface ProjectMapper extends BaseMapper<Project> {
             @Result(property = "endTime", column = "end_time"),
             @Result(property = "img", column = "img"),
     })
-    List<HashMap<String,Object>> getProjects(Pagination pagination, @Param("keyword") String keyword);
+    List<HashMap<String,Object>> getProjects(Pagination pagination, @Param("keyword") String keyword, @Param("userId") Integer userId);
 
 
     @Select("SELECT\n" +

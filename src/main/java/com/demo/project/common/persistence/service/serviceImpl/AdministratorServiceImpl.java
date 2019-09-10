@@ -1,6 +1,6 @@
 package com.demo.project.common.persistence.service.serviceImpl;
 
-import com.demo.project.common.persistence.template.modal.Administrator;
+import com.demo.project.common.persistence.modal.Administrator;
 import com.demo.project.common.persistence.dao.AdministratorMapper;
 import com.demo.project.common.persistence.service.AdministratorService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;

@@ -1,6 +1,6 @@
 package com.demo.project.common.persistence.dao;
 
-import com.demo.project.common.persistence.template.modal.Keywords;
+import com.demo.project.common.persistence.modal.Keywords;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 
 /**

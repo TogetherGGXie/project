@@ -3,7 +3,7 @@
 <mapper namespace="com.demo.project.common.persistence.dao.GroupMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.demo.project.common.persistence.template.modal.Group">
+    <resultMap id="BaseResultMap" type="com.demo.project.common.persistence.modal.Group">
         <result column="project_id" property="projectId" />
         <result column="user_id" property="userId" />
     </resultMap>

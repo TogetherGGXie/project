@@ -1,6 +1,6 @@
-package com.demo.project.common.persistence.template.modal;
+package com.demo.project.common.persistence.modal;
 
-import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import java.io.Serializable;
 
@@ -10,23 +10,22 @@ import java.io.Serializable;
  * </p>
  *
  * @author XieZhiyang123
- * @since 2019-09-06
+ * @since 2019-09-03
  */
-@TableName("group")
-public class Group implements Serializable {
+@TableName("keywords")
+public class Keywords implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
      * 项目id
      */
-    @TableField("project_id")
+    @TableId("project_id")
     private Integer projectId;
     /**
-     * 用户id
+     * 关键字
      */
-    @TableField("user_id")
-    private Integer userId;
+    private String keywords;
 
 
     public Integer getProjectId() {
@@ -37,19 +36,19 @@ public class Group implements Serializable {
         this.projectId = projectId;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public String getKeywords() {
+        return keywords;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setKeywords(String keywords) {
+        this.keywords = keywords;
     }
 
     @Override
     public String toString() {
-        return "Group{" +
+        return "Keywords{" +
         ", projectId=" + projectId +
-        ", userId=" + userId +
+        ", keywords=" + keywords +
         "}";
     }
 }

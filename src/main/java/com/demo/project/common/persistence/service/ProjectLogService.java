@@ -1,14 +1,10 @@
 package com.demo.project.common.persistence.service;
 
 import com.baomidou.mybatisplus.plugins.Page;
-import com.demo.project.common.persistence.template.modal.ProjectLog;
+import com.demo.project.common.persistence.modal.ProjectLog;
 import com.baomidou.mybatisplus.service.IService;
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import org.apache.ibatis.annotations.Param;
 
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * <p>

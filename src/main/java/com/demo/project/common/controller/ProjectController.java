@@ -3,29 +3,25 @@ package com.demo.project.common.controller;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.demo.project.common.persistence.modal.Group;
+import com.demo.project.common.persistence.service.GroupService;
 import com.demo.project.common.persistence.service.ProjectService;
-import com.demo.project.common.persistence.template.modal.Project;
-import com.demo.project.common.persistence.template.modal.ProjectLog;
-import com.demo.project.common.persistence.template.modal.WxUser;
-import com.demo.project.util.FileUtil;
+import com.demo.project.common.persistence.modal.Project;
+import com.demo.project.common.persistence.modal.WxUser;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * <p>
@@ -42,28 +38,61 @@ public class ProjectController {
 
     @Autowired
     private ProjectService projectService;
+
+    @Autowired
+    private GroupService groupService;
+
     @Value("${web.upload-path}")
     private String path;
 
     @RequestMapping(value = "getProject/{pid}", method = RequestMethod.GET)
-    public Object getProject(@PathVariable(value = "pid") Integer pid) {
-        return projectService.getProject(Integer.valueOf(pid));
+    public Object getProject(@PathVariable(value = "pid") Integer pid,
+                             HttpServletRequest request) {
+        HashMap<String,Object> map = new HashMap<>();
+        WxUser wxUser = (WxUser) request.getSession().getAttribute("user");
+        if (wxUser == null) {
+            map.put("code",1);
+            map.put("msg","登录状态失效，请重新启动小程序");
+            return map;
+        }else if (groupService.selectOne(new EntityWrapper<Group>().eq("project_id",pid)
+                .eq("user_id",wxUser.getUserId())) != null) {
+            map.put("code",0);
+            map.put("project",projectService.getProject(Integer.valueOf(pid)));
+            return map;
+        }else {
+            map.put("code",2);
+            map.put("msg","您暂无查看此项目的权限，请与管理员联系");
+            return map;
+        }
+
     }
 
     @ApiOperation("按条件获取所有项目")
     @RequestMapping(value = "getAllProjects", method = RequestMethod.GET )
-    public Page<HashMap<String, Object>> getProject(@RequestParam(value = "pageNumber", required = false) Integer page,
+    public HashMap<String, Object> getProject(@RequestParam(value = "pageNumber", required = false) Integer page,
                              @RequestParam(value = "pageSize", required = false) Integer pageSize,
-                             @RequestParam(value = "searchText", required = false) String keyword
+                             @RequestParam(value = "searchText", required = false) String keyword,
+                                                    HttpServletRequest request
                              ) {
+        HashMap<String,Object> map = new HashMap<>();
+        WxUser wxUser = (WxUser) request.getSession().getAttribute("user");
+        if (wxUser == null) {
+            map.put("code",1);
+            map.put("msg","登录状态失效，请重新启动小程序");
+            return map;
+        }
         if(page == null )
             page = 1;
         if (pageSize == null)
             pageSize =10;
         if (keyword == null)
             keyword = "";
-        Page<HashMap<String, Object>> pager = projectService.getProjects(new Page<>(page,pageSize), keyword);
-        return pager;
+        Page<HashMap<String, Object>> pager = projectService.getProjects(new Page<>(page,pageSize), keyword, wxUser.getUserId());
+        map.put("records",pager.getRecords());
+        map.put("pages",pager.getPages());
+        map.put("total",pager.getTotal());
+        map.put("code",0);
+        return map;
     }
 
     @ApiOperation("获取所有项目id和名字")
@@ -88,14 +117,14 @@ public class ProjectController {
                          @RequestParam(value = "startTime", required = false) String startTime,
                          @RequestParam(value = "endTime", required = false) String endTime,
                          @RequestParam("projectName") String projectName,
-            HttpServletRequest request) {
+                         HttpServletRequest request) {
         HashMap<String, Object> map = new HashMap<>();
         WxUser wxUser = (WxUser) request.getSession().getAttribute("user");
         if (wxUser == null) {
             map.put("code",1);
             map.put("msg", "登录状态失效，请重启小程序");
         }else if (wxUser.getAuthority() < 2) {
-            map.put("code",1);
+            map.put("code",2);
             map.put("msg", "权限不足，请确认后重试");
         }else {
             DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
@@ -124,23 +153,6 @@ public class ProjectController {
         return map;
     }
 
-//    @RequestMapping(value="/testuploadimg", method = RequestMethod.POST)
-//    public @ResponseBody String uploadImg(@RequestParam("file") MultipartFile file,
-//                                          HttpServletRequest request) {
-//        String contentType = file.getContentType();
-////        String fileName = file.getOriginalFilename();
-//        String fileName = UUID.randomUUID().toString().replaceAll("-", "")+".png";
-//        /*System.out.println("fileName-->" + fileName);
-//        System.out.println("getContentType-->" + contentType);*/
-////        String filePath = request.getSession().getServletContext().getRealPath("imgupload/");
-//        try {
-//            FileUtil.uploadFile(file.getBytes(), path, fileName);
-//        } catch (Exception e) {
-//            // TODO: handle exception
-//        }
-//        //返回json
-//        return "uploadimg success : "+path+fileName;
-//    }
 
 }
 

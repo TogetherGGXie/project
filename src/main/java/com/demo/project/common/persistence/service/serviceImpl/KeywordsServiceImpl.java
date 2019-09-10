@@ -1,6 +1,6 @@
 package com.demo.project.common.persistence.service.serviceImpl;
 
-import com.demo.project.common.persistence.template.modal.Keywords;
+import com.demo.project.common.persistence.modal.Keywords;
 import com.demo.project.common.persistence.dao.KeywordsMapper;
 import com.demo.project.common.persistence.service.KeywordsService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;

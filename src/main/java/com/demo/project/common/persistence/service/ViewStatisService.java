@@ -1,6 +1,6 @@
 package com.demo.project.common.persistence.service;
 
-import com.demo.project.common.persistence.template.modal.ViewStatis;
+import com.demo.project.common.persistence.modal.ViewStatis;
 import com.baomidou.mybatisplus.service.IService;
 
 import java.util.HashMap;

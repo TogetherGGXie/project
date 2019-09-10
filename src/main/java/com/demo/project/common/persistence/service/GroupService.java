@@ -1,7 +1,9 @@
 package com.demo.project.common.persistence.service;
 
-import com.demo.project.common.persistence.template.modal.Group;
+import com.demo.project.common.persistence.modal.Group;
 import com.baomidou.mybatisplus.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -9,8 +11,8 @@ import com.baomidou.mybatisplus.service.IService;
  * </p>
  *
  * @author XieZhiyang123
- * @since 2019-09-06
+ * @since 2019-09-09
  */
 public interface GroupService extends IService<Group> {
-
+    Boolean addStaffs(Integer projectId, List<Integer> userIds);
 }

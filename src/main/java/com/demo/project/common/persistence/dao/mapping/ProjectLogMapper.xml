@@ -3,7 +3,7 @@
 <mapper namespace="com.demo.project.common.persistence.dao.ProjectLogMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.demo.project.common.persistence.template.modal.ProjectLog">
+    <resultMap id="BaseResultMap" type="com.demo.project.common.persistence.modal.ProjectLog">
         <id column="log_id" property="logId" />
         <result column="project_id" property="projectId" />
         <result column="user_id" property="userId" />

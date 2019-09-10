@@ -1,7 +1,7 @@
 package com.demo.project.common.persistence.service.serviceImpl;
 
 import com.baomidou.mybatisplus.plugins.Page;
-import com.demo.project.common.persistence.template.modal.Project;
+import com.demo.project.common.persistence.modal.Project;
 import com.demo.project.common.persistence.dao.ProjectMapper;
 import com.demo.project.common.persistence.service.ProjectService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
@@ -23,13 +23,13 @@ import java.util.List;
 public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> implements ProjectService {
 
     @Override
-    public Page<HashMap<String, Object>> getProjects(Page<HashMap<String, Object>> pager, String keyword) {
+    public Page<HashMap<String, Object>> getProjects(Page<HashMap<String, Object>> pager, String keyword, Integer userId) {
         if(keyword == null || keyword.equals("null") || keyword.equals(""))
             keyword = "[\\w]*";
         else
             keyword = keyword.trim().replaceAll("\\s+","|");
         Page<HashMap<String, Object>> page = new Page<>(pager.getCurrent(),pager.getSize());
-        return page.setRecords(projectMapper.getProjects(page, keyword));
+        return page.setRecords(projectMapper.getProjects(page, keyword, userId));
     }
 
     @Override

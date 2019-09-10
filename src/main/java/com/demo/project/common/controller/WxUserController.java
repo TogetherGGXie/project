@@ -4,11 +4,10 @@ package com.demo.project.common.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.demo.project.common.persistence.service.WxUserService;
-import com.demo.project.common.persistence.template.modal.WxUser;
+import com.demo.project.common.persistence.modal.WxUser;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
@@ -24,7 +23,6 @@ import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -174,7 +172,6 @@ public class WxUserController {
             map.put("sessionId",request.getSession().getId());
             map.put("authority",wxUser.getAuthority());
             map.put("userName",wxUser.getName());
-//            System.out.println("完整结束");
         } catch (Exception e) {
             e.printStackTrace();
         }

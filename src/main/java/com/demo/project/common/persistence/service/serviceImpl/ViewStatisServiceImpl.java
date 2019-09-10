@@ -1,6 +1,6 @@
 package com.demo.project.common.persistence.service.serviceImpl;
 
-import com.demo.project.common.persistence.template.modal.ViewStatis;
+import com.demo.project.common.persistence.modal.ViewStatis;
 import com.demo.project.common.persistence.dao.ViewStatisMapper;
 import com.demo.project.common.persistence.service.ViewStatisService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;

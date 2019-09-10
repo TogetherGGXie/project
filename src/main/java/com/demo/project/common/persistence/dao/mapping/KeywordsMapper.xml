@@ -3,7 +3,7 @@
 <mapper namespace="com.demo.project.common.persistence.dao.KeywordsMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.demo.project.common.persistence.template.modal.Keywords">
+    <resultMap id="BaseResultMap" type="com.demo.project.common.persistence.modal.Keywords">
         <id column="project_id" property="projectId" />
         <result column="keywords" property="keywords" />
     </resultMap>

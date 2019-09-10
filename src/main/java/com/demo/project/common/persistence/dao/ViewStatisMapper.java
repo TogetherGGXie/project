@@ -1,12 +1,11 @@
 package com.demo.project.common.persistence.dao;
 
-import com.demo.project.common.persistence.template.modal.ViewStatis;
+import com.demo.project.common.persistence.modal.ViewStatis;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;

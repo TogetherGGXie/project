@@ -3,7 +3,7 @@
 <mapper namespace="com.demo.project.common.persistence.dao.ViewStatisMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.demo.project.common.persistence.template.modal.ViewStatis">
+    <resultMap id="BaseResultMap" type="com.demo.project.common.persistence.modal.ViewStatis">
         <id column="log_id" property="logId" />
         <result column="user_id" property="userId" />
         <result column="view_time" property="viewTime" />

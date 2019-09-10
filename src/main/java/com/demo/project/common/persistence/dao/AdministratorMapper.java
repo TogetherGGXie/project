@@ -1,6 +1,6 @@
 package com.demo.project.common.persistence.dao;
 
-import com.demo.project.common.persistence.template.modal.Administrator;
+import com.demo.project.common.persistence.modal.Administrator;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 
 /**

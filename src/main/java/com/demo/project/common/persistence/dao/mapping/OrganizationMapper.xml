@@ -3,7 +3,7 @@
 <mapper namespace="com.demo.project.common.persistence.dao.OrganizationMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.demo.project.common.persistence.template.modal.Organization">
+    <resultMap id="BaseResultMap" type="com.demo.project.common.persistence.modal.Organization">
         <id column="id" property="id" />
         <result column="pid" property="pid" />
         <result column="name" property="name" />
