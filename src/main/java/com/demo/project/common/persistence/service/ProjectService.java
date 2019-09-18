@@ -19,4 +19,6 @@ public interface ProjectService extends IService<Project> {
     Page<HashMap<String, Object>> getProjects(Page<HashMap<String, Object>> pager, String keyword, Integer userId);
     List<HashMap<String, Object>> getProjectNames();
     HashMap<String, Object> getProject(Integer projectId);
+    List<HashMap<String, Object>> getProjectList(List<Integer> organizationIds);
+    Integer getOrganizationId(Integer projectId);
 }

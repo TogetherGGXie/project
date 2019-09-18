@@ -4,7 +4,11 @@ import com.demo.project.common.persistence.modal.WxUser;
 import com.demo.project.common.persistence.dao.WxUserMapper;
 import com.demo.project.common.persistence.service.WxUserService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * <p>
@@ -17,4 +21,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class WxUserServiceImpl extends ServiceImpl<WxUserMapper, WxUser> implements WxUserService {
 
+    @Autowired
+    private WxUserMapper wxUserMapper;
+    @Override
+    public List<HashMap<String, Object>> getUserList(List<Integer> organizationIds) {
+        return wxUserMapper.getUsers(organizationIds);
+    }
 }

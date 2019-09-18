@@ -16,4 +16,5 @@ import java.util.List;
  */
 public interface ViewStatisService extends IService<ViewStatis> {
     List<HashMap<String,Object>> getViewHistory(Integer logId);
+    HashMap<String, List<HashMap<String, Object>>> getHistory(List<Integer> projectIds);
 }

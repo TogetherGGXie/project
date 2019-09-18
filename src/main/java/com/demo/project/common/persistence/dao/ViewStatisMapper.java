@@ -37,4 +37,21 @@ public interface ViewStatisMapper extends BaseMapper<ViewStatis> {
             @Result(property = "viewTime", column = "view_time")
     })
     List<HashMap<String,Object>> getViewHistory(@Param("logId") Integer logId);
+
+    @Select("<script>" +
+            "\tSELECT view_statis.log_id, wx_user.name, view_statis.view_time \n" +
+            "\tfrom view_statis \n" +
+            "\tjoin wx_user \n" +
+            "\ton wx_user.user_id = view_statis.user_id \n" +
+            "\twhere view_statis.log_id in \n" +
+            "\t<foreach collection='logIds' item='logId' index='index'  open = '(' close = ')' separator=','> \n" +
+            "#{logId} \n" +
+            "</foreach> \n" +
+            "</script>")
+    @Results(id="UserListResultMap",value={
+            @Result(property = "logId", column = "log_id"),
+            @Result(property = "name", column = "name"),
+            @Result(property = "viewTime", column = "view_time"),
+    })
+    List<HashMap<String, Object>> getHistory(@Param("logIds") List<Integer> logIds);
 }

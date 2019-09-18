@@ -27,6 +27,8 @@ public class Administrator implements Serializable {
      */
     private String password;
 
+    private Integer oid;
+
 
     public String getAdminName() {
         return adminName;
@@ -44,11 +46,20 @@ public class Administrator implements Serializable {
         this.password = password;
     }
 
+    public Integer getOid() {
+        return oid;
+    }
+
+    public void setOid(Integer oid) {
+        this.oid = oid;
+    }
+
     @Override
     public String toString() {
         return "Administrator{" +
-        ", adminName=" + adminName +
-        ", password=" + password +
-        "}";
+                "adminName='" + adminName + '\'' +
+                ", password='" + password + '\'' +
+                ", oid=" + oid +
+                '}';
     }
 }

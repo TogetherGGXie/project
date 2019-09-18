@@ -77,6 +77,51 @@ public interface ProjectMapper extends BaseMapper<Project> {
 
 
     @Select("SELECT\n" +
+            "\twx_user.organization_id\n"+
+            "FROM\n" +
+            "\t`project`\n" +
+            "\tJOIN wx_user ON project.leader_id = wx_user.user_id \n" +
+            "WHERE\n" +
+            "\tproject.project_id = #{projectId}")
+    @Results(id="OrganizationIdResultMap",value={
+            @Result(property = "organizationId", column = "organization_id"),
+    })
+    Integer getOrganizationId(@Param("projectId") Integer projectId);
+
+    @Select("<script>SELECT\n" +
+            "\tproject.project_id,\n"+
+            "\tproject.project_name,\n" +
+            "\twx_user.NAME,\n" +
+            "\tproject.start_time,\n" +
+            "\tproject.end_time,\n" +
+            "\tproject.img,\n" +
+            "\tproject.create_time,\n" +
+            "\tproject.last_upd_time,\n" +
+            "\tkeywords.keywords\n" +
+            "FROM\n" +
+            "\t`project`\n" +
+            "\tJOIN wx_user ON project.leader_id = wx_user.user_id \n" +
+            "\tLeft JOIN keywords on project.project_id = keywords.project_id \n" +
+            "\twhere wx_user.organization_id in \n" +
+            "<foreach collection='organizationIds' item='organizationId' index='index'  open = '(' close = ')' separator=','> \n" +
+            "#{organizationId} \n" +
+            "</foreach>\n" +
+            "\tORDER BY\n" +
+            "\tproject.create_time DESC </script> ")
+    @Results(id="ProjectListResultMap",value={
+            @Result(property = "projectId", column = "project_id"),
+            @Result(property = "projectName", column = "project_name"),
+            @Result(property = "leaderName", column = "NAME"),
+            @Result(property = "startTime", column = "start_time"),
+            @Result(property = "endTime", column = "end_time"),
+            @Result(property = "img", column = "img"),
+            @Result(property = "createTime", column = "create_time"),
+            @Result(property = "lastUpdTime", column = "last_upd_time"),
+            @Result(property = "keywords", column = "keywords"),
+    })
+    List<HashMap<String,Object>> getProjectList(@Param("organizationIds") List<Integer> organizationIds);
+
+    @Select("SELECT\n" +
             "\tproject.project_id,\n"+
             "\tproject.project_name\n" +
             "FROM\n" +

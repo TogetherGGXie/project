@@ -71,4 +71,37 @@ public interface ProjectLogMapper extends BaseMapper<ProjectLog> {
             @Result(property = "content", column = "content"),
     })
     List<String> getLogContents(@Param("projectId") Integer projectId);
+
+    @Select("<script>SELECT \n" +
+            "\tproject_log.log_id, \n" +
+            "\tproject.project_name,\n" +
+            "\twx_user.NAME,\n" +
+            "\tproject_log.date,\n" +
+            "\tproject_log.content,\n" +
+            "\tproject_log.pics,\n" +
+            "\tproject_log.create_time,\n" +
+            "\tproject_log.last_upd_time,\n" +
+            "\tproject_log.view_times\n" +
+            "FROM\n" +
+            "\t`project`\n" +
+            "\tJOIN wx_user ON project.leader_id = wx_user.user_id \n" +
+            "\tJoin project_log on project.project_id = project_log.project_id \n" +
+            "\twhere wx_user.organization_id in \n" +
+            "<foreach collection='organizationIds' item='organizationId' index='index'  open = '(' close = ')' separator=','> \n" +
+            "#{organizationId} \n" +
+            "</foreach>\n" +
+            "\tORDER BY\n" +
+            "\tproject_log.create_time DESC </script> ")
+    @Results(id="ProjectLogListResultMap",value={
+            @Result(property = "logId", column = "log_id"),
+            @Result(property = "projectName", column = "project_name"),
+            @Result(property = "leaderName", column = "NAME"),
+            @Result(property = "date", column = "date"),
+            @Result(property = "content", column = "content"),
+            @Result(property = "pics", column = "pics"),
+            @Result(property = "createTime", column = "create_time"),
+            @Result(property = "lastUpdTime", column = "last_upd_time"),
+            @Result(property = "viewTimes", column = "view_times"),
+    })
+    List<HashMap<String,Object>> getProjectLogList(@Param("organizationIds") List<Integer> organizationIds);
 }

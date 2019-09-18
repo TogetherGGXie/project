@@ -53,6 +53,10 @@ public class ProjectLogServiceImpl extends ServiceImpl<ProjectLogMapper, Project
         return stringBuilder.toString();
     }
 
+    @Override
+    public List<HashMap<String, Object>> getProjectLogList(List<Integer> organizationIds) {
+        return projectLogMapper.getProjectLogList(organizationIds);
+    }
 
     @Autowired
     private ProjectLogMapper projectLogMapper;

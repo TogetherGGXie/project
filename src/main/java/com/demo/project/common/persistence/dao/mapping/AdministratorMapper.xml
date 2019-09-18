@@ -6,6 +6,7 @@
     <resultMap id="BaseResultMap" type="com.demo.project.common.persistence.modal.Administrator">
         <id column="admin_name" property="adminName" />
         <result column="password" property="password" />
+        <result column="oid" property="oid" />
     </resultMap>
 
 </mapper>

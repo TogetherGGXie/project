@@ -11,7 +11,7 @@
  Target Server Version : 50720
  File Encoding         : 65001
 
- Date: 10/09/2019 15:36:39
+ Date: 18/09/2019 16:51:56
 */
 
 SET NAMES utf8mb4;
@@ -24,13 +24,14 @@ DROP TABLE IF EXISTS `administrator`;
 CREATE TABLE `administrator`  (
   `admin_name` varchar(5) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '管理员姓名',
   `password` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '密码',
+  `oid` int(10) NULL DEFAULT NULL COMMENT '部门Id',
   PRIMARY KEY (`admin_name`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of administrator
 -- ----------------------------
-INSERT INTO `administrator` VALUES ('admin', 'admin');
+INSERT INTO `administrator` VALUES ('admin', 'admin', 0);
 
 -- ----------------------------
 -- Table structure for groups
@@ -179,7 +180,6 @@ INSERT INTO `project_log` VALUES (43, 15, 3, '2019-08-22', 'asdf', 'projectLog/e
 INSERT INTO `project_log` VALUES (44, 15, 3, '2019-08-22', '123', '', '2019-09-02 15:12:16', '2019-09-10 14:16:20', 1);
 INSERT INTO `project_log` VALUES (45, 14, 3, '2019-08-22', '123', '', '2019-09-02 15:12:17', '2019-09-02 15:13:01', 0);
 INSERT INTO `project_log` VALUES (46, 15, 3, '2019-08-22', '1231', '', '2019-09-02 15:12:18', '2019-09-10 14:12:44', 1);
-INSERT INTO `project_log` VALUES (47, 15, 3, '2019-08-22', '111', '', '2019-09-02 15:12:19', '2019-09-02 15:13:01', 0);
 INSERT INTO `project_log` VALUES (48, 15, 3, '2019-08-22', '666', '', '2019-09-02 15:12:20', '2019-09-02 15:13:01', 0);
 INSERT INTO `project_log` VALUES (49, 15, 3, '2019-08-22', '222', '', '2019-09-02 15:12:22', '2019-09-02 15:13:01', 0);
 INSERT INTO `project_log` VALUES (50, 15, 3, '2019-08-22', '999', '', '2019-09-02 15:12:23', '2019-09-10 14:15:37', 1);

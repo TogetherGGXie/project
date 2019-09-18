@@ -5,6 +5,7 @@ import com.demo.project.common.persistence.modal.ProjectLog;
 import com.baomidou.mybatisplus.service.IService;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * <p>
@@ -19,5 +20,5 @@ public interface ProjectLogService extends IService<ProjectLog> {
     Page<HashMap<String, Object>> getLogs(Page<HashMap<String, Object>> pager, Integer projectId, String keyword);
     Boolean updateViewTimes(Integer logId);
     String getLogContents(Integer projectId);
-
+    List<HashMap<String, Object>> getProjectLogList(List<Integer> organizationIds);
 }

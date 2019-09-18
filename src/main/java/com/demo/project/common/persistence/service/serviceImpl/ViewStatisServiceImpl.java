@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,5 +27,23 @@ public class ViewStatisServiceImpl extends ServiceImpl<ViewStatisMapper, ViewSta
     @Override
     public List<HashMap<String, Object>> getViewHistory(Integer logId) {
         return viewStatisMapper.getViewHistory(logId);
+    }
+
+    @Override
+    public HashMap<String, List<HashMap<String, Object>>> getHistory(List<Integer> logIds) {
+        HashMap<String, List<HashMap<String, Object>>> result = new HashMap<>();
+        List<HashMap<String, Object>> historys = viewStatisMapper.getHistory(logIds);
+        for (HashMap<String, Object> history : historys) {
+            if (result.get(history.get("logId").toString()) == null) {
+                List<HashMap<String, Object>> viewHistory = new ArrayList<>();
+                viewHistory.add(history);
+                result.put(history.get("logId").toString(), viewHistory);
+            } else {
+                List<HashMap<String, Object>> viewHistory= result.get(history.get("logId").toString());
+                viewHistory.add(history);
+                result.put(history.get("logId").toString(), viewHistory);
+            }
+        }
+        return result;
     }
 }
