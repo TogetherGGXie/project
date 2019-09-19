@@ -58,9 +58,10 @@ public class AdministratorController {
 
     @ApiOperation("管理员登录")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Object adminLogin(@RequestParam(name = "adminName") String adminName,
-                             @RequestParam(name = "password") String password,
+    public Object adminLogin(@RequestBody HashMap<String, String> loginForm,
                              HttpServletRequest request) {
+        String adminName = loginForm.get("adminName");
+        String password = loginForm.get("password");
         HashMap<String,Object> map = new HashMap<>();
         Administrator administrator = administratorService.selectOne(new EntityWrapper<Administrator>().eq("admin_name", adminName));
         if (administrator == null) {
@@ -93,8 +94,8 @@ public class AdministratorController {
     }
 
     @ApiOperation("管理员禁用用户账号")
-    @PostMapping("/banUser")
-    public HashMap<String,Object> adminBanUsers(@RequestParam(name = "userId") Integer userId,
+    @PostMapping("/banUser/{userId}")
+    public HashMap<String,Object> adminBanUsers(@PathVariable Integer userId,
                                                 HttpServletRequest request) {
         Administrator administrator = (Administrator) request.getSession().getAttribute("admin");
         HashMap<String,Object> map = new HashMap<>();
@@ -117,8 +118,8 @@ public class AdministratorController {
     }
 
     @ApiOperation("管理员启用用户账号")
-    @PostMapping("/enableUser")
-    public HashMap<String,Object> adminEnableUsers(@RequestParam(name = "userId") Integer userId,
+    @PostMapping("/enableUser/{userId}")
+    public HashMap<String,Object> adminEnableUsers(@PathVariable Integer userId,
                                                 HttpServletRequest request) {
         Administrator administrator = (Administrator) request.getSession().getAttribute("admin");
         HashMap<String,Object> map = new HashMap<>();
@@ -174,7 +175,7 @@ public class AdministratorController {
     @ApiOperation("管理员编辑项目")
     @PostMapping("/editProject")
     public HashMap<String,Object> adminEditProject(HttpServletRequest request,
-                                                   @RequestParam(name = "project") Project project) {
+                                                   @RequestBody Project project) {
         Administrator administrator = (Administrator) request.getSession().getAttribute("admin");
         HashMap<String,Object> map = new HashMap<>();
         if(administrator == null) {
@@ -222,7 +223,7 @@ public class AdministratorController {
     @ApiOperation("管理员编辑日志")
     @PostMapping("/editProjectLog")
     public HashMap<String,Object> adminEditProjectLog(HttpServletRequest request,
-                                                   @RequestParam(name = "projectLog") ProjectLog projectLog) {
+                                                   @RequestBody ProjectLog projectLog) {
         Administrator administrator = (Administrator) request.getSession().getAttribute("admin");
         HashMap<String,Object> map = new HashMap<>();
         if(administrator == null) {
@@ -243,9 +244,9 @@ public class AdministratorController {
     }
 
     @ApiOperation("管理员删除日志")
-    @PostMapping("/deleteProjectLog")
+    @PostMapping("/deleteProjectLog/{logId}")
     public HashMap<String,Object> adminDeleteProjectLog(HttpServletRequest request,
-                                                      @RequestParam(name = "logId") Integer logId) {
+                                                      @PathVariable Integer logId) {
         Administrator administrator = (Administrator) request.getSession().getAttribute("admin");
         HashMap<String,Object> map = new HashMap<>();
         if(administrator == null) {
