@@ -440,7 +440,9 @@ public class AdministratorController {
             map.put("code",1);
             map.put("msg", "登录状态失效，请重新登录后再试！");
         }else {
-            if (groupService.delete(new EntityWrapper<Group>().eq("project_id", staff.get("projectId")).eq("user_id", staff.get("userId")))) {
+            String userName = staff.get("userName").toString();
+            WxUser wxUser = wxUserService.selectOne(new EntityWrapper<WxUser>().eq("name", userName));
+            if (groupService.delete(new EntityWrapper<Group>().eq("project_id", staff.get("projectId")).eq("user_id", wxUser.getUserId()))) {
                 map.put("code", 0);
             } else {
                 map.put("code", 1);
