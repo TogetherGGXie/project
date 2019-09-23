@@ -2,6 +2,7 @@ package com.demo.project.common.controller;
 
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.demo.project.common.persistence.modal.*;
 import com.demo.project.common.persistence.service.*;
@@ -13,10 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>
@@ -182,14 +180,52 @@ public class AdministratorController {
             map.put("code",1);
             map.put("msg", "登录状态失效，请重新登录后再试！");
         }else {
+            System.out.println("project = " + project.toString());
+            System.out.println(project.getProjectId());
             List<Integer> ids = getOrganizationIds(administrator.getOid());
+            System.out.println(ids.toString());
             Integer oid = projectService.getOrganizationId(project.getProjectId());
+            System.out.println("oid = " + oid);
             if(ids.contains(oid)){
                 projectService.updateById(project);
                 map.put("code",0);
             } else {
                 map.put("code", 1);
                 map.put("msg", "您暂无编辑该项目的权限");
+            }
+        }
+        return map;
+    }
+
+    @ApiOperation("管理员添加项目")
+    @PostMapping("/addProject")
+    public HashMap<String,Object> adminAddProject(HttpServletRequest request,
+                                                     @RequestBody Project project) {
+        Administrator administrator = (Administrator) request.getSession().getAttribute("admin");
+        HashMap<String,Object> map = new HashMap<>();
+        if(administrator == null) {
+            map.put("code",1);
+            map.put("msg", "登录状态失效，请重新登录后再试！");
+        }else {
+            if (project.getLeaderId() == null) {
+                map.put("code",3);
+                map.put("msg", "请选择负责人");
+            } else {
+                List<Integer> ids = getOrganizationIds(administrator.getOid());
+                WxUser wxUser = wxUserService.selectById(project.getLeaderId());
+                if (ids.contains(wxUser.getOrganizationId())) {
+                    if (project.getProjectName() != null) {
+                        project.setCreateTime(DateUtil.date());
+                        projectService.insert(project);
+                        map.put("code", 0);
+                    } else {
+                        map.put("code",3);
+                        map.put("msg", "请正确填写项目信息");
+                    }
+                } else {
+                    map.put("code", 2);
+                    map.put("msg", "您暂无发布该项目的权限");
+                }
             }
         }
         return map;
@@ -216,6 +252,85 @@ public class AdministratorController {
             }
             map.put("record",projectLogList);
             map.put("code",0);
+        }
+
+        return map;
+    }
+
+    @ApiOperation("管理员获取当前部门内所有用户下拉框内容")
+    @GetMapping("/getUserSelection")
+    public HashMap<String,Object> getUserSelection(HttpServletRequest request){
+        Administrator administrator = (Administrator) request.getSession().getAttribute("admin");
+        HashMap<String,Object> map = new HashMap<>();
+        if(administrator == null) {
+            map.put("code",1);
+            map.put("msg", "登录状态失效，请重新登录后再试！");
+        }else {
+            List<Integer> ids = getOrganizationIds(administrator.getOid());
+            map.put("selection",wxUserService.selectMaps(new EntityWrapper<WxUser>().setSqlSelect("user_id, name").in("organization_id",ids)));
+            map.put("code", 0);
+        }
+        return map;
+    }
+
+    @ApiOperation("管理员获取当前部门内所有项目下拉框内容")
+    @GetMapping("/getProjectSelection")
+    public HashMap<String,Object> getProjectSelection(HttpServletRequest request){
+        Administrator administrator = (Administrator) request.getSession().getAttribute("admin");
+        HashMap<String,Object> map = new HashMap<>();
+        if(administrator == null) {
+            map.put("code",1);
+            map.put("msg", "登录状态失效，请重新登录后再试！");
+        }else {
+            List<Integer> ids = getOrganizationIds(administrator.getOid());
+            map.put("selection", projectService.getProjectSelection(ids));
+            map.put("code", 0);
+        }
+        return map;
+    }
+
+    @ApiOperation("检查项目名字是否合法")
+    @RequestMapping(value = "checkProjectName", method = RequestMethod.GET )
+    public boolean checkProjectNames(@RequestBody HashMap<String, String> projectForm) {
+        String projectName = projectForm.get("projectName");
+        if (projectName == null || projectName.equals(""))
+            return false;
+        Project project = projectService.selectOne(new EntityWrapper<Project>().eq("project_name",projectName));
+        if(project != null)
+            return false;
+        else
+            return true;
+    }
+
+    @ApiOperation("管理员添加日志")
+    @PostMapping("/addProjectLog")
+    public HashMap<String,Object> adminAddProjectLog(HttpServletRequest request,
+                                                      @RequestBody ProjectLog projectLog) {
+        Administrator administrator = (Administrator) request.getSession().getAttribute("admin");
+        HashMap<String,Object> map = new HashMap<>();
+        if(administrator == null) {
+            map.put("code",1);
+            map.put("msg", "登录状态失效，请重新登录后再试！");
+        }else {
+            if (projectLog.getProjectId() == null) {
+                map.put("code",3);
+                map.put("msg", "请选择日志");
+            } else {
+                List<Integer> ids = getOrganizationIds(administrator.getOid());
+                Integer oid = projectService.getOrganizationId(projectLog.getProjectId());
+                if (ids.contains(oid)) {
+                    if (projectLog.getDate() != null && projectLog.getContent() != null && projectLog.getUserId() != null) {
+                        projectLogService.insert(projectLog);
+                        map.put("code", 0);
+                    } else {
+                        map.put("code",3);
+                        map.put("msg", "请正确填写日志信息");
+                    }
+                } else {
+                    map.put("code", 2);
+                    map.put("msg", "您暂无发布该项目下日志的权限");
+                }
+            }
         }
         return map;
     }

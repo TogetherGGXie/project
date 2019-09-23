@@ -76,6 +76,7 @@ public interface ProjectLogMapper extends BaseMapper<ProjectLog> {
             "\tproject_log.log_id, \n" +
             "\tproject.project_name,\n" +
             "\twx_user.NAME,\n" +
+            "\tauthor.name as author,\n" +
             "\tproject_log.date,\n" +
             "\tproject_log.content,\n" +
             "\tproject_log.pics,\n" +
@@ -86,6 +87,7 @@ public interface ProjectLogMapper extends BaseMapper<ProjectLog> {
             "\t`project`\n" +
             "\tJOIN wx_user ON project.leader_id = wx_user.user_id \n" +
             "\tJoin project_log on project.project_id = project_log.project_id \n" +
+            "\tjoin wx_user as author on project_log.user_id = author.user_id \n" +
             "\twhere wx_user.organization_id in \n" +
             "<foreach collection='organizationIds' item='organizationId' index='index'  open = '(' close = ')' separator=','> \n" +
             "#{organizationId} \n" +
@@ -96,6 +98,7 @@ public interface ProjectLogMapper extends BaseMapper<ProjectLog> {
             @Result(property = "logId", column = "log_id"),
             @Result(property = "projectName", column = "project_name"),
             @Result(property = "leaderName", column = "NAME"),
+            @Result(property = "author", column = "author"),
             @Result(property = "date", column = "date"),
             @Result(property = "content", column = "content"),
             @Result(property = "pics", column = "pics"),

@@ -6,6 +6,7 @@
     <resultMap id="BaseResultMap" type="com.demo.project.common.persistence.modal.Project">
         <id column="project_id" property="projectId" />
         <result column="project_name" property="projectName" />
+        <result column="introduction" property="introduction" />
         <result column="leader_id" property="leaderId" />
         <result column="start_time" property="startTime" />
         <result column="end_time" property="endTime" />

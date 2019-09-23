@@ -92,6 +92,7 @@ public interface ProjectMapper extends BaseMapper<Project> {
             "\tproject.project_id,\n"+
             "\tproject.project_name,\n" +
             "\twx_user.NAME,\n" +
+            "\tproject.introduction,\n" +
             "\tproject.start_time,\n" +
             "\tproject.end_time,\n" +
             "\tproject.img,\n" +
@@ -111,6 +112,7 @@ public interface ProjectMapper extends BaseMapper<Project> {
     @Results(id="ProjectListResultMap",value={
             @Result(property = "projectId", column = "project_id"),
             @Result(property = "projectName", column = "project_name"),
+            @Result(property = "introduction", column = "introduction"),
             @Result(property = "leaderName", column = "NAME"),
             @Result(property = "startTime", column = "start_time"),
             @Result(property = "endTime", column = "end_time"),
@@ -121,16 +123,39 @@ public interface ProjectMapper extends BaseMapper<Project> {
     })
     List<HashMap<String,Object>> getProjectList(@Param("organizationIds") List<Integer> organizationIds);
 
-    @Select("SELECT\n" +
+    @Select("<script>SELECT\n" +
+            "\tproject.project_id,\n"+
+            "\tproject.project_name,\n" +
+            "FROM\n" +
+            "\t`project`\n" +
+            "\tJOIN wx_user ON project.leader_id = wx_user.user_id \n" +
+            "\twhere wx_user.organization_id in \n" +
+            "<foreach collection='organizationIds' item='organizationId' index='index'  open = '(' close = ')' separator=','> \n" +
+            "#{organizationId} \n" +
+            "</foreach>\n" +
+            "\tORDER BY\n" +
+            "\tproject.create_time DESC </script> ")
+    @Results(id="ProjectSelectionResultMap",value={
+            @Result(property = "projectId", column = "project_id"),
+            @Result(property = "projectName", column = "project_name"),
+    })
+    List<HashMap<String,Object>> getProjectSelection(@Param("organizationIds") List<Integer> organizationIds);
+
+    @Select("<script>SELECT\n" +
             "\tproject.project_id,\n"+
             "\tproject.project_name\n" +
             "FROM\n" +
             "\t`project`\n" +
+            "\tjoin wx_user on wx_user.user_id = project.leader_id \n" +
+            "\twhere wx_user.organization_id in \n" +
+            "<foreach collection='organizationIds' item='organizationId' index='index'  open = '(' close = ')' separator=','> \n" +
+            "#{organizationId} \n" +
+            "</foreach>\n" +
             "\t ORDER BY\n" +
-            "\tproject.start_time DESC")
+            "\tproject.start_time DESC</script>")
     @Results(id="ProjectNamesResultMap",value={
             @Result(property = "projectId", column = "project_id"),
             @Result(property = "projectName", column = "project_name"),
     })
-    List<HashMap<String,Object>> getProjectNames();
+    List<HashMap<String,Object>> getProjectNames(@Param("organizationIds") List<Integer> organizationIds);
 }

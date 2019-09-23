@@ -4,7 +4,9 @@ package com.demo.project.common.controller;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.demo.project.common.persistence.modal.Group;
+import com.demo.project.common.persistence.modal.Organization;
 import com.demo.project.common.persistence.service.GroupService;
+import com.demo.project.common.persistence.service.OrganizationService;
 import com.demo.project.common.persistence.service.ProjectService;
 import com.demo.project.common.persistence.modal.Project;
 import com.demo.project.common.persistence.modal.WxUser;
@@ -19,9 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * <p>
@@ -42,6 +42,9 @@ public class ProjectController {
     @Autowired
     private GroupService groupService;
 
+    @Autowired
+    private OrganizationService organizationService;
+
 
     @Value("${web.upload-path}")
     private String path;
@@ -53,11 +56,11 @@ public class ProjectController {
         WxUser wxUser = (WxUser) request.getSession().getAttribute("user");
         if (wxUser == null) {
             map.put("code",1);
-            map.put("msg","登录状态失效，请重新启动小程序");
+            map.put("msg","登录状态失效");
             return map;
         }else if (wxUser.getStatus() == 0) {
             map.put("code",3);
-            map.put("msg","您的账号未激活，请与管理员联系");
+            map.put("msg","您的账号未激活");
             return map;
         }else if (groupService.selectOne(new EntityWrapper<Group>().eq("project_id",pid)
                 .eq("user_id",wxUser.getUserId())) != null
@@ -67,7 +70,7 @@ public class ProjectController {
             return map;
         }else {
             map.put("code",2);
-            map.put("msg","您暂无查看此项目的权限，请与管理员联系");
+            map.put("msg","暂无权限");
             return map;
         }
 
@@ -84,11 +87,11 @@ public class ProjectController {
         WxUser wxUser = (WxUser) request.getSession().getAttribute("user");
         if (wxUser == null) {
             map.put("code",1);
-            map.put("msg","登录状态失效，请重新启动小程序");
+            map.put("msg","登录状态失效");
             return map;
         }else if (wxUser.getStatus() == 0) {
             map.put("code",3);
-            map.put("msg","您的账号未激活，请与管理员联系");
+            map.put("msg","您的账号未激活");
             return map;
         }
         if(page == null )
@@ -107,8 +110,16 @@ public class ProjectController {
 
     @ApiOperation("获取所有项目id和名字")
     @RequestMapping(value = "getProjectNames", method = RequestMethod.GET )
-    public List<HashMap<String,Object>> getProjectNames() {
-        return projectService.getProjectNames();
+    public List<HashMap<String,Object>> getProjectNames(HttpServletRequest request) {
+        WxUser wxUser = (WxUser) request.getSession().getAttribute("user");
+        List<Map<String, Object>> oids = organizationService.selectMaps(new EntityWrapper<Organization>().setSqlSelect("id,pid").orderBy("id"));
+        List<Integer> ids = new ArrayList<>();
+        ids.add(wxUser.getOrganizationId());
+        for(Map<String, Object> organization : oids) {
+            if(ids.contains(organization.get("pid")))
+                ids.add((Integer)organization.get("id"));
+        }
+        return projectService.getProjectNames(ids);
     }
 
     @ApiOperation("检查项目名字是否合法")
@@ -133,13 +144,13 @@ public class ProjectController {
         WxUser wxUser = (WxUser) request.getSession().getAttribute("user");
         if (wxUser == null) {
             map.put("code",1);
-            map.put("msg", "登录状态失效，请重启小程序");
+            map.put("msg", "登录状态失效");
         }else if (wxUser.getAuthority() < 2) {
             map.put("code",2);
-            map.put("msg", "权限不足，请确认后重试");
+            map.put("msg", "权限不足");
         }else if (wxUser.getStatus() == 0) {
             map.put("code",3);
-            map.put("msg","您的账号未激活，请与管理员联系");
+            map.put("msg","您的账号未激活");
             return map;
         }else {
             DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");

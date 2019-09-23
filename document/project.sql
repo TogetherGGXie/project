@@ -11,7 +11,7 @@
  Target Server Version : 50720
  File Encoding         : 65001
 
- Date: 18/09/2019 16:51:56
+ Date: 23/09/2019 10:27:23
 */
 
 SET NAMES utf8mb4;
@@ -108,6 +108,7 @@ DROP TABLE IF EXISTS `project`;
 CREATE TABLE `project`  (
   `project_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '工程id',
   `project_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '工程名称',
+  `introduction` varchar(60) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '项目简介',
   `leader_id` int(10) NULL DEFAULT NULL COMMENT '负责人id',
   `start_time` date NULL DEFAULT NULL COMMENT '开始日期',
   `end_time` date NULL DEFAULT NULL COMMENT '竣工日期',
@@ -120,25 +121,25 @@ CREATE TABLE `project`  (
 -- ----------------------------
 -- Records of project
 -- ----------------------------
-INSERT INTO `project` VALUES (1, '1a', 1, '2019-08-12', NULL, 'project/4a9ee87ac131458898fa80f4dbffef17.png', '2019-09-02 15:13:43', '2019-09-02 15:13:45');
-INSERT INTO `project` VALUES (2, '2a', 2, '2019-08-13', NULL, 'project/4a9ee87ac131458898fa80f4dbffef17.png', '2019-09-02 15:13:45', '2019-09-02 15:13:47');
-INSERT INTO `project` VALUES (3, '3a', 1, '2019-08-15', NULL, 'project/4a9ee87ac131458898fa80f4dbffef17.png', '2019-09-02 15:13:48', '2019-09-02 15:13:49');
-INSERT INTO `project` VALUES (4, '4a', 2, '2019-08-15', NULL, 'project/4a9ee87ac131458898fa80f4dbffef17.png', '2019-09-02 15:13:50', '2019-09-02 15:13:52');
-INSERT INTO `project` VALUES (5, '5a', 2, '2019-08-15', NULL, 'project/4a9ee87ac131458898fa80f4dbffef17.png', '2019-09-02 15:13:52', '2019-09-02 15:13:54');
-INSERT INTO `project` VALUES (6, '6a', 2, '2019-08-15', NULL, 'project/4a9ee87ac131458898fa80f4dbffef17.png', '2019-09-02 15:13:55', '2019-09-02 15:13:56');
-INSERT INTO `project` VALUES (7, '7a', 2, '2019-08-15', NULL, 'project/4a9ee87ac131458898fa80f4dbffef17.png', '2019-09-02 15:13:57', '2019-09-02 15:13:59');
-INSERT INTO `project` VALUES (8, '8a', 2, '2019-08-15', NULL, 'project/4a9ee87ac131458898fa80f4dbffef17.png', '2019-09-02 15:14:00', '2019-09-02 15:14:01');
-INSERT INTO `project` VALUES (9, '123', 1, NULL, NULL, '', '2019-09-02 15:14:04', '2019-09-02 15:14:06');
-INSERT INTO `project` VALUES (10, 'aaa', 1, '2019-08-20', '2019-08-28', 'projectLog/191919a07bc3476ab1ea4796ca05976b.png projectLog/5a0df8eec048439e8f7f7d39c865b667.png projectLog/e168c502a4c74a36ab9ddfe2a12b27e4.png', '2019-09-02 15:14:06', '2019-09-02 15:14:08');
-INSERT INTO `project` VALUES (11, 'aaa', 1, '2019-08-20', NULL, 'project/4640002a956a4eb094d34d3dd6035dc2.png', '2019-09-02 15:14:10', '2019-09-02 15:14:11');
-INSERT INTO `project` VALUES (12, '666', 1, '2019-08-20', NULL, ' ', '2019-09-02 15:14:13', '2019-09-02 15:14:15');
-INSERT INTO `project` VALUES (13, '132', 1, '2019-08-20', NULL, 'project/193a5f77f7484bd38bce4f3c83399d1e.png', '2019-09-02 15:14:15', '2019-09-02 15:14:17');
-INSERT INTO `project` VALUES (14, '阿萨德', 3, '2019-08-21', NULL, '', '2019-09-02 15:14:18', '2019-09-02 15:14:19');
-INSERT INTO `project` VALUES (15, 'aaas ', 3, '2019-08-21', NULL, 'project/9804b59871214c3fae755b5a55cbde25.png', '2019-09-02 15:14:20', '2019-09-02 15:14:22');
-INSERT INTO `project` VALUES (16, '测试', 3, '2019-08-23', NULL, 'project/c15980457f234e6f8827f7d90058ff26.png', '2019-09-02 15:14:24', '2019-09-02 15:14:25');
-INSERT INTO `project` VALUES (17, '测试 2019-08-23', 3, '2019-08-23', NULL, 'project/efff8d6d99534f718be760a681be7dd0.png', '2019-09-02 15:14:27', '2019-09-02 15:14:28');
-INSERT INTO `project` VALUES (18, '123132', 3, '2019-09-02', '2019-09-02', '', '2019-09-02 15:14:29', '2019-09-02 15:14:33');
-INSERT INTO `project` VALUES (19, '123124', 3, '2019-09-02', NULL, '', '2019-09-02 15:14:34', '2019-09-02 15:14:39');
+INSERT INTO `project` VALUES (1, '1a', '1', 1, '2019-08-12', NULL, 'project/4a9ee87ac131458898fa80f4dbffef17.png', '2019-09-02 15:13:43', '2019-09-21 17:06:58');
+INSERT INTO `project` VALUES (2, '2a', '1', 2, '2019-08-13', NULL, 'project/4a9ee87ac131458898fa80f4dbffef17.png', '2019-09-02 15:13:45', '2019-09-21 17:07:00');
+INSERT INTO `project` VALUES (3, '3a', '1', 1, '2019-08-15', NULL, 'project/4a9ee87ac131458898fa80f4dbffef17.png', '2019-09-02 15:13:48', '2019-09-21 17:07:01');
+INSERT INTO `project` VALUES (4, '4a', '1', 2, '2019-08-15', NULL, 'project/4a9ee87ac131458898fa80f4dbffef17.png', '2019-09-02 15:13:50', '2019-09-21 17:07:02');
+INSERT INTO `project` VALUES (5, '5a', '1', 2, '2019-08-15', NULL, 'project/4a9ee87ac131458898fa80f4dbffef17.png', '2019-09-02 15:13:52', '2019-09-21 17:07:03');
+INSERT INTO `project` VALUES (6, '6a', '1', 2, '2019-08-15', NULL, 'project/4a9ee87ac131458898fa80f4dbffef17.png', '2019-09-02 15:13:55', '2019-09-21 17:07:04');
+INSERT INTO `project` VALUES (7, '7a', '1', 2, '2019-08-15', NULL, 'project/4a9ee87ac131458898fa80f4dbffef17.png', '2019-09-02 15:13:57', '2019-09-21 17:07:13');
+INSERT INTO `project` VALUES (8, '8a', '1', 2, '2019-08-15', NULL, 'project/4a9ee87ac131458898fa80f4dbffef17.png', '2019-09-02 15:14:00', '2019-09-21 17:07:14');
+INSERT INTO `project` VALUES (9, '123', '1', 1, NULL, NULL, '', '2019-09-02 15:14:04', '2019-09-21 17:07:15');
+INSERT INTO `project` VALUES (10, 'aaa', '1', 1, '2019-08-20', '2019-08-28', 'projectLog/191919a07bc3476ab1ea4796ca05976b.png projectLog/5a0df8eec048439e8f7f7d39c865b667.png projectLog/e168c502a4c74a36ab9ddfe2a12b27e4.png', '2019-09-02 15:14:06', '2019-09-21 17:07:16');
+INSERT INTO `project` VALUES (11, 'aaa', '1', 1, '2019-08-20', NULL, 'project/4640002a956a4eb094d34d3dd6035dc2.png', '2019-09-02 15:14:10', '2019-09-21 17:07:17');
+INSERT INTO `project` VALUES (12, '666', '1', 1, '2019-08-20', NULL, ' ', '2019-09-02 15:14:13', '2019-09-21 17:07:17');
+INSERT INTO `project` VALUES (13, '132', '1', 1, '2019-08-20', NULL, 'project/193a5f77f7484bd38bce4f3c83399d1e.png', '2019-09-02 15:14:15', '2019-09-21 17:07:18');
+INSERT INTO `project` VALUES (14, '阿萨德', '1', 3, '2019-08-21', NULL, '', '2019-09-02 15:14:18', '2019-09-21 17:07:18');
+INSERT INTO `project` VALUES (15, 'aaas ', '1', 3, '2019-08-21', NULL, 'project/9804b59871214c3fae755b5a55cbde25.png', '2019-09-02 15:14:20', '2019-09-21 17:07:19');
+INSERT INTO `project` VALUES (16, '测试', '1', 3, '2019-08-23', NULL, 'project/c15980457f234e6f8827f7d90058ff26.png', '2019-09-02 15:14:24', '2019-09-21 17:07:19');
+INSERT INTO `project` VALUES (17, '测试 2019-08-23', '1', 3, '2019-08-23', NULL, 'project/efff8d6d99534f718be760a681be7dd0.png', '2019-09-02 15:14:27', '2019-09-21 17:07:23');
+INSERT INTO `project` VALUES (18, '123132', '1', 3, '2019-09-02', '2019-09-02', '', '2019-09-02 15:14:29', '2019-09-21 17:07:20');
+INSERT INTO `project` VALUES (19, '123124', '1frgdgdr', 3, '2019-09-02', NULL, '', '2019-09-02 15:14:34', '2019-09-22 00:17:16');
 
 -- ----------------------------
 -- Table structure for project_log
@@ -231,7 +232,7 @@ CREATE TABLE `wx_user`  (
 -- Records of wx_user
 -- ----------------------------
 INSERT INTO `wx_user` VALUES (1, '123123123', '一二三四', '1231', '123123', 1, 2, 1);
-INSERT INTO `wx_user` VALUES (2, '456456456', '456', '456456', '456456', 1, 2, 1);
+INSERT INTO `wx_user` VALUES (2, '456456456', '456', '456456', '456456', 1, 2, 0);
 INSERT INTO `wx_user` VALUES (3, 'o5N0c5P1V0c5-mPwc2QxAe_-oBMo', '哈哈哈', NULL, NULL, 2, 3, 1);
 
 SET FOREIGN_KEY_CHECKS = 1;

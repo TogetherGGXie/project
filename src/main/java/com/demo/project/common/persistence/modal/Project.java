@@ -36,6 +36,12 @@ public class Project implements Serializable {
     /**
      * 负责人id
      */
+    @TableField("introduction")
+    private String introduction;
+
+    /**
+     * 项目简介
+     */
     @TableField("leader_id")
     private Integer leaderId;
     /**
@@ -95,6 +101,13 @@ public class Project implements Serializable {
         this.projectId = projectId;
     }
 
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
+    }
     public String getProjectName() {
         return projectName;
     }
@@ -140,6 +153,7 @@ public class Project implements Serializable {
         return "Project{" +
                 "projectId=" + projectId +
                 ", projectName='" + projectName + '\'' +
+                ", introduction='" + introduction + '\'' +
                 ", leaderId=" + leaderId +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
