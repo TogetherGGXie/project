@@ -194,6 +194,7 @@ public class WxUserController {
             map.put("authority",wxUser.getAuthority());
             map.put("userName",wxUser.getName());
             map.put("status", wxUser.getStatus());
+            map.put("organization", wxUser.getOrganizationId());
         } catch (Exception e) {
             e.printStackTrace();
         }

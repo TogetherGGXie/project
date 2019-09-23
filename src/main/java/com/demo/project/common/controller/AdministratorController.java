@@ -382,6 +382,75 @@ public class AdministratorController {
         return map;
     }
 
+    @ApiOperation("批量添加用户")
+    @RequestMapping(value = "/addStaffs", method = RequestMethod.POST)
+    @ResponseBody
+    public HashMap<String,Object> addStaffs(@RequestBody HashMap<String, Object> staff,
+                                            HttpServletRequest request) {
+        HashMap<String,Object> map = new HashMap<>();
+        Administrator administrator = (Administrator) request.getSession().getAttribute("admin");
+        if(administrator == null) {
+            map.put("code",1);
+            map.put("msg", "登录状态失效，请重新登录后再试！");
+        }else {
+            Integer projectId = (Integer) staff.get("projectId");
+            List<Integer> userIds = (List<Integer>)staff.get("userIds");
+            if(groupService.addStaffs(projectId, userIds)) {
+                map.put("code", 0);
+            } else {
+                map.put("code", 0);
+                map.put("msg", "添加失败！");
+            }
+        }
+        return map;
+    }
+
+    @ApiOperation("添加单个用户")
+    @RequestMapping(value = "addStaff", method = RequestMethod.POST)
+    @ResponseBody
+    public HashMap<String,Object> addStaff(@RequestBody HashMap<String, Object> staff,
+                                           HttpServletRequest request) {
+        HashMap<String,Object> map = new HashMap<>();
+        Administrator administrator = (Administrator) request.getSession().getAttribute("admin");
+        if(administrator == null) {
+            map.put("code",1);
+            map.put("msg", "登录状态失效，请重新登录后再试！");
+        }else {
+            Group group = new Group();
+            group.setProjectId((Integer) staff.get("projectId"));
+            group.setUserId((Integer)staff.get("userId"));
+            if (groupService.insert(group)) {
+                map.put("code", 0);
+            } else {
+                map.put("code", 1);
+                map.put("msg", "添加失败！");
+            }
+        }
+        return map;
+    }
+
+    @ApiOperation("删除用户")
+    @RequestMapping(value = "deleteStaff", method = RequestMethod.POST)
+    @ResponseBody
+    public HashMap<String,Object> deleteStaff(@RequestBody HashMap<String, Object> staff,
+                                              HttpServletRequest request) {
+        HashMap<String,Object> map = new HashMap<>();
+        Administrator administrator = (Administrator) request.getSession().getAttribute("admin");
+        if(administrator == null) {
+            map.put("code",1);
+            map.put("msg", "登录状态失效，请重新登录后再试！");
+        }else {
+            if (groupService.delete(new EntityWrapper<Group>().eq("project_id", staff.get("projectId")).eq("user_id", staff.get("userId")))) {
+                map.put("code", 0);
+            } else {
+                map.put("code", 1);
+                map.put("msg", "删除失败！");
+            }
+        }
+        return map;
+    }
+
+
     protected List<Integer> getOrganizationIds(Integer oid){
         List<Map<String, Object>> oids = organizationService.selectMaps(new EntityWrapper<Organization>().setSqlSelect("id,pid").orderBy("id"));
         List<Integer> ids = new ArrayList<>();

@@ -54,6 +54,7 @@ public interface ProjectMapper extends BaseMapper<Project> {
             "\tproject.project_id,\n"+
             "\tproject.project_name,\n" +
             "\twx_user.NAME,\n" +
+            "\tproject.introduction,\n" +
             "\tproject.start_time,\n" +
             "\tproject.end_time,\n" +
             "\tproject.img,\n" +
@@ -67,6 +68,7 @@ public interface ProjectMapper extends BaseMapper<Project> {
     @Results(id="ProjectResultMap",value={
             @Result(property = "projectId", column = "project_id"),
             @Result(property = "projectName", column = "project_name"),
+            @Result(property = "introduction", column = "introduction"),
             @Result(property = "leaderName", column = "NAME"),
             @Result(property = "startTime", column = "start_time"),
             @Result(property = "endTime", column = "end_time"),
