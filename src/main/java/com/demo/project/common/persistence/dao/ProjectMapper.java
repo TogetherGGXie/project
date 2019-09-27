@@ -148,16 +148,16 @@ public interface ProjectMapper extends BaseMapper<Project> {
             "\tproject.project_name\n" +
             "FROM\n" +
             "\t`project`\n" +
-            "\tjoin wx_user on wx_user.user_id = project.leader_id \n" +
-            "\twhere wx_user.organization_id in \n" +
-            "<foreach collection='organizationIds' item='organizationId' index='index'  open = '(' close = ')' separator=','> \n" +
-            "#{organizationId} \n" +
+            "\twhere project.leader_id = #{userId} \n" +
+            "\tor project.project_id in \n" +
+            "<foreach collection='projectIds' item='projectId' index='index'  open = '(' close = ')' separator=','> \n" +
+            "#{projectId} \n" +
             "</foreach>\n" +
             "\t ORDER BY\n" +
-            "\tproject.start_time DESC</script>")
+            "\tproject.create_time DESC</script>")
     @Results(id="ProjectNamesResultMap",value={
             @Result(property = "projectId", column = "project_id"),
             @Result(property = "projectName", column = "project_name"),
     })
-    List<HashMap<String,Object>> getProjectNames(@Param("organizationIds") List<Integer> organizationIds);
+    List<HashMap<String,Object>> getProjectNames(@Param("projectIds") List<Integer> projectIds, @Param("userId") Integer userId);
 }

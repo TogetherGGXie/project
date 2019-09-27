@@ -10,12 +10,9 @@ import com.demo.project.common.persistence.modal.WxUser;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
@@ -50,10 +47,10 @@ public class WxUserController {
 
     @ApiOperation("修改用户信息")
     @ResponseBody
-    @RequestMapping(value = "/editInfo", method = RequestMethod.POST)
-    public Object editName(@RequestParam(value = "newName", required = false) String newName,
-                           @RequestParam(value = "authority", required = false) Integer authority,
-                           @RequestParam(value = "organization_id", required = false) Integer organization_id,
+    @RequestMapping(value = "/editUserInfo", method = RequestMethod.POST)
+    public Object editName(@RequestParam(value = "userName") String newName,
+                           @RequestParam(value = "authority") Integer authority,
+                           @RequestParam(value = "organizationId") Integer organizationId,
                             HttpServletRequest request) {
         HashMap<String, Object> map = new HashMap<>();
         WxUser wxUser = (WxUser) request.getSession().getAttribute("user");
@@ -64,15 +61,14 @@ public class WxUserController {
         }
         if (newName != null && newName != "" && !newName.equals(""))
             wxUser.setName(newName);
-        if (authority != null) {
+        if (authority != wxUser.getAuthority()) {
             wxUser.setAuthority(authority);
             wxUser.setStatus(0);
         }
-        if (organization_id != null) {
-            wxUser.setOrganizationId(organization_id);
+        if (organizationId != wxUser.getOrganizationId()) {
+            wxUser.setOrganizationId(organizationId);
             wxUser.setStatus(0);
         }
-
         System.out.println(wxUser.toString());
         if(wxUserService.updateById(wxUser)){
             request.getSession().setAttribute("user",wxUser);
@@ -81,19 +77,10 @@ public class WxUserController {
             map.put("code",1);
             map.put("msg", "修改失败");
         }
+        request.getSession().setAttribute("user", wxUser);
         return map;
     }
 
-    @ApiOperation("获取用户名字")
-    @ResponseBody
-    @RequestMapping(value = "/getName", method = RequestMethod.GET)
-    public String getName(HttpServletRequest request) {
-        WxUser wxUser = (WxUser) request.getSession().getAttribute("user");
-        if (wxUser==null)
-            return null;
-        System.out.println("name="+wxUser.getName());
-        return wxUser.getName();
-    }
 
     @ApiOperation("微信用户登陆")
     @ResponseBody
@@ -228,6 +215,22 @@ public class WxUserController {
     @ResponseBody
     public List<Map<String, Object>> getAllUsers() {
         return wxUserService.selectMaps(new EntityWrapper<WxUser>().setSqlSelect("user_id,name,authority,organization_id").eq("status",1));
+    }
+
+    @ApiOperation("获取用户个人信息")
+    @GetMapping("/getUserInfo")
+    @ResponseBody
+    public HashMap<String, Object> getUserInfo(HttpServletRequest request) {
+        HashMap<String, Object> map = new HashMap<>();
+        WxUser wxUser = (WxUser) request.getSession().getAttribute("user");
+        if (wxUser == null) {
+            map.put("code",1);
+            map.put("msg", "登录状态失效");
+        }else {
+            map.put("userInfo", wxUserService.getUserInfo(wxUser.getUserId()));
+            map.put("code",0);
+        }
+        return map;
     }
 }
 

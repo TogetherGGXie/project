@@ -36,4 +36,18 @@ public interface WxUserMapper extends BaseMapper<WxUser> {
             @Result(property = "status", column = "status"),
     })
     public List<HashMap<String, Object>> getUsers(@Param("organizationIds") List<Integer> organizationIds);
+
+    @Select("SELECT wx_user.name, wx_user.authority, wx_user.organization_id, organization.name as departmentName," +
+            "o.name as organizationName from \n" +
+            "wx_user left join organization on organization.id = wx_user.organization_id \n" +
+            "left join organization o on o.id = organization.pid " +
+            "where wx_user.user_id = #{userId} \n")
+    @Results(id="WxUserInfoResultMap",value={
+            @Result(property = "userName", column = "name"),
+            @Result(property = "authority", column = "authority"),
+            @Result(property = "organizationId", column = "organization_id"),
+            @Result(property = "departmentName", column = "departmentName"),
+            @Result(property = "organizationName", column = "organizationName"),
+    })
+    public HashMap<String, Object> getUserInfo(@Param("userId") Integer userId);
 }

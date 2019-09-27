@@ -17,7 +17,7 @@ import java.util.List;
  */
 public interface ProjectService extends IService<Project> {
     Page<HashMap<String, Object>> getProjects(Page<HashMap<String, Object>> pager, String keyword, Integer userId);
-    List<HashMap<String, Object>> getProjectNames(List<Integer> organizationIds);
+    List<HashMap<String, Object>> getProjectNames(List<Integer> projectIds, Integer userId);
     HashMap<String, Object> getProject(Integer projectId);
     List<HashMap<String, Object>> getProjectList(List<Integer> organizationIds);
     List<HashMap<String, Object>> getProjectSelection(List<Integer> organizationIds);

@@ -16,4 +16,5 @@ import java.util.List;
  */
 public interface WxUserService extends IService<WxUser> {
   List<HashMap<String, Object>> getUserList(List<Integer> organizationIds);
+  HashMap<String, Object> getUserInfo(Integer userId);
 }

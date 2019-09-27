@@ -55,11 +55,12 @@ public class ViewStatisController {
             viewStatis.setUserId(wxUser.getUserId());
             ViewStatis vs = viewStatisService.selectOne(new EntityWrapper<ViewStatis>().eq("log_id",logId).eq("user_id",wxUser.getUserId()));
             if(vs != null) {
-                viewStatisService.insertOrUpdate(viewStatis);
+                vs.setViewTime(DateUtil.date());
+                viewStatisService.updateById(vs);
             }
             else {
                 viewStatis.setViewTime(DateUtil.date());
-                viewStatisService.insertOrUpdate(viewStatis);
+                viewStatisService.insert(viewStatis);
                 projectLogService.updateViewTimes(logId);
             }
             map.put("code", 0);

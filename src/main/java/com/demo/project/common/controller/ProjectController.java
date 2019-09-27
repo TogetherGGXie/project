@@ -112,14 +112,13 @@ public class ProjectController {
     @RequestMapping(value = "getProjectNames", method = RequestMethod.GET )
     public List<HashMap<String,Object>> getProjectNames(HttpServletRequest request) {
         WxUser wxUser = (WxUser) request.getSession().getAttribute("user");
-        List<Map<String, Object>> oids = organizationService.selectMaps(new EntityWrapper<Organization>().setSqlSelect("id,pid").orderBy("id"));
+        List<Map<String, Object>> projectIds = groupService.selectMaps(new EntityWrapper<Group>().setSqlSelect("project_id").eq("user_id",wxUser.getUserId()));
         List<Integer> ids = new ArrayList<>();
-        ids.add(wxUser.getOrganizationId());
-        for(Map<String, Object> organization : oids) {
-            if(ids.contains(organization.get("pid")))
-                ids.add((Integer)organization.get("id"));
+        for(Map<String, Object> project : projectIds) {
+            if(!ids.contains(project.get("project_id")))
+                ids.add((Integer)project.get("project_id"));
         }
-        return projectService.getProjectNames(ids);
+        return projectService.getProjectNames(ids, wxUser.getUserId());
     }
 
     @ApiOperation("检查项目名字是否合法")
