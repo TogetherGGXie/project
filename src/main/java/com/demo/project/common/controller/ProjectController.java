@@ -137,6 +137,7 @@ public class ProjectController {
                          @RequestParam(value = "startTime", required = false) String startTime,
                          @RequestParam(value = "endTime", required = false) String endTime,
                          @RequestParam("projectName") String projectName,
+                         @RequestParam(value = "introduction",required = false) String introduction,
                          @RequestParam(value = "userList", required = false) List<Integer> userList,
                          HttpServletRequest request) {
         HashMap<String, Object> map = new HashMap<>();
