@@ -50,4 +50,16 @@ public interface WxUserMapper extends BaseMapper<WxUser> {
             @Result(property = "organizationName", column = "organizationName"),
     })
     public HashMap<String, Object> getUserInfo(@Param("userId") Integer userId);
+
+    @Select("<script> SELECT wx_user.user_id, wx_user.name from \n" +
+            "wx_user join organization on organization.id = wx_user.organization_id \n" +
+            "where wx_user.authority = 2 and wx_user.organization_id in \n" +
+            "<foreach collection='organizationIds' item='organizationId' index='index'  open = '(' close = ')' separator=','> \n" +
+            "#{organizationId} \n" +
+            "</foreach></script>")
+    @Results(id="AdminListResultMap",value={
+            @Result(property = "userId", column = "user_id"),
+            @Result(property = "name", column = "name"),
+    })
+    public List<HashMap<String, Object>> getAdmins(@Param("organizationIds") List<Integer> organizationIds);
 }

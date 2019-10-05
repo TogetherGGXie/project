@@ -170,6 +170,7 @@ public class ProjectController {
             project.setStartTime(start);
             project.setEndTime(end);
             project.setImg(pics);
+            project.setIntroduction(introduction);
             project.setCreateTime(new Date());
             project.setLastUpdTime(new Date());
             projectService.insert(project);

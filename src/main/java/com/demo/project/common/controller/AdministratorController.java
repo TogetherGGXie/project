@@ -75,6 +75,16 @@ public class AdministratorController {
         return map;
     }
 
+    @ApiOperation("管理员注销登录")
+    @RequestMapping(value = "/signout", method = RequestMethod.GET)
+    public HashMap<String, Object> adminLogin(HttpServletRequest request) {
+        HashMap<String,Object> map = new HashMap<>();
+        map.put("code",1);
+        request.getSession().invalidate();
+        map.put("code",0);
+        return map;
+    }
+
     @ApiOperation("管理员获取部门内用户列表")
     @GetMapping("/getUsers")
     public HashMap<String,Object> adminGetUsers(HttpServletRequest request) {
@@ -85,8 +95,10 @@ public class AdministratorController {
             map.put("msg", "登录状态失效，请重新登录后再试！");
         }else {
             List<Integer> ids = getOrganizationIds(administrator.getOid());
+            List<HashMap<String, Object>> records = wxUserService.getUserList(ids);
             map.put("code", 0);
-            map.put("records",wxUserService.getUserList(ids));
+            map.put("records", records);
+            map.put("total", records.size());
         }
         return map;
     }
@@ -164,7 +176,8 @@ public class AdministratorController {
                 }
                 project.put("group",group.get(project.get("projectId").toString()));
             }
-            map.put("record",projectList);
+            map.put("records",projectList);
+            map.put("total",projectList.size());
             map.put("code",0);
         }
         return map;
@@ -251,6 +264,7 @@ public class AdministratorController {
                 projectLog.put("viewHistory",viewHistory.get(projectLog.get("logId").toString()));
             }
             map.put("record",projectLogList);
+            map.put("total", projectLogList.size());
             map.put("code",0);
         }
 
@@ -273,6 +287,22 @@ public class AdministratorController {
         return map;
     }
 
+    @ApiOperation("管理员获取当前部门内所有管理员下拉框内容")
+    @GetMapping("/getAdminSelection")
+    public HashMap<String,Object> getAdminSelection(HttpServletRequest request){
+        Administrator administrator = (Administrator) request.getSession().getAttribute("admin");
+        HashMap<String,Object> map = new HashMap<>();
+        if(administrator == null) {
+            map.put("code",1);
+            map.put("msg", "登录状态失效，请重新登录后再试！");
+        }else {
+            List<Integer> ids = getOrganizationIds(administrator.getOid());
+            map.put("selection",wxUserService.getAdminList(ids));
+            map.put("code", 0);
+        }
+        return map;
+    }
+
     @ApiOperation("管理员获取当前部门内所有项目下拉框内容")
     @GetMapping("/getProjectSelection")
     public HashMap<String,Object> getProjectSelection(HttpServletRequest request){
@@ -290,7 +320,7 @@ public class AdministratorController {
     }
 
     @ApiOperation("检查项目名字是否合法")
-    @RequestMapping(value = "checkProjectName", method = RequestMethod.GET )
+    @RequestMapping(value = "checkProjectName", method = RequestMethod.POST )
     public boolean checkProjectNames(@RequestBody HashMap<String, String> projectForm) {
         String projectName = projectForm.get("projectName");
         if (projectName == null || projectName.equals(""))
@@ -347,6 +377,9 @@ public class AdministratorController {
         }else {
             List<Integer> ids = getOrganizationIds(administrator.getOid());
             Integer oid = projectService.getOrganizationId(projectLog.getProjectId());
+            System.out.println(projectLog.getProjectId());
+            System.out.println("projectLog = ");
+            System.out.println(projectLog);
             if(ids.contains(oid)){
                 projectLogService.updateById(projectLog);
                 map.put("code",0);
@@ -398,7 +431,7 @@ public class AdministratorController {
             if(groupService.addStaffs(projectId, userIds)) {
                 map.put("code", 0);
             } else {
-                map.put("code", 0);
+                map.put("code", 1);
                 map.put("msg", "添加失败！");
             }
         }

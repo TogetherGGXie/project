@@ -75,6 +75,7 @@ public interface ProjectLogMapper extends BaseMapper<ProjectLog> {
     @Select("<script>SELECT \n" +
             "\tproject_log.log_id, \n" +
             "\tproject.project_name,\n" +
+            "\tproject.project_id,\n" +
             "\twx_user.NAME,\n" +
             "\tauthor.name as author,\n" +
             "\tproject_log.date,\n" +
@@ -97,6 +98,7 @@ public interface ProjectLogMapper extends BaseMapper<ProjectLog> {
     @Results(id="ProjectLogListResultMap",value={
             @Result(property = "logId", column = "log_id"),
             @Result(property = "projectName", column = "project_name"),
+            @Result(property = "projectId", column = "project_id"),
             @Result(property = "leaderName", column = "NAME"),
             @Result(property = "author", column = "author"),
             @Result(property = "date", column = "date"),

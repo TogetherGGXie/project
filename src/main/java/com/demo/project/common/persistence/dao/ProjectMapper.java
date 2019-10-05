@@ -94,6 +94,7 @@ public interface ProjectMapper extends BaseMapper<Project> {
             "\tproject.project_id,\n"+
             "\tproject.project_name,\n" +
             "\twx_user.NAME,\n" +
+            "\tproject.leader_id,\n" +
             "\tproject.introduction,\n" +
             "\tproject.start_time,\n" +
             "\tproject.end_time,\n" +
@@ -115,6 +116,7 @@ public interface ProjectMapper extends BaseMapper<Project> {
             @Result(property = "projectId", column = "project_id"),
             @Result(property = "projectName", column = "project_name"),
             @Result(property = "introduction", column = "introduction"),
+            @Result(property = "leaderId", column = "leader_id"),
             @Result(property = "leaderName", column = "NAME"),
             @Result(property = "startTime", column = "start_time"),
             @Result(property = "endTime", column = "end_time"),
@@ -127,7 +129,7 @@ public interface ProjectMapper extends BaseMapper<Project> {
 
     @Select("<script>SELECT\n" +
             "\tproject.project_id,\n"+
-            "\tproject.project_name,\n" +
+            "\tproject.project_name\n" +
             "FROM\n" +
             "\t`project`\n" +
             "\tJOIN wx_user ON project.leader_id = wx_user.user_id \n" +
