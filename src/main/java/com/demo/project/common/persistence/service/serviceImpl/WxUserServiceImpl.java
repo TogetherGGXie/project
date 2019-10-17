@@ -37,4 +37,9 @@ public class WxUserServiceImpl extends ServiceImpl<WxUserMapper, WxUser> impleme
     public HashMap<String, Object> getUserInfo(Integer userId) {
         return wxUserMapper.getUserInfo(userId);
     }
+
+    @Override
+    public List<HashMap<String, Object>> getUserSelection(List<Integer> oids) {
+        return wxUserMapper.getUserSelection(oids);
+    }
 }

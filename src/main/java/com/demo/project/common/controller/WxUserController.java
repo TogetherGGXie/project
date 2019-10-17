@@ -166,6 +166,11 @@ public class WxUserController {
             JSONObject  jsonObject = JSONObject.parseObject(result);
             Map<String,Object> mapper = (Map<String,Object>)jsonObject;
 //            System.out.println("map="+jsonObject.toString());
+            if(mapper.get("errcode") != null) {
+                map.put("msg", "登录失败，请重试");
+                map.put("code", 1);
+                return map;
+            }
             WxUser wxUser = wxUserService.selectOne(new EntityWrapper<WxUser>().eq("open_id",mapper.get("openid")));;
             if (wxUser == null){
                 wxUser = new WxUser();
@@ -189,25 +194,27 @@ public class WxUserController {
         return map;
     }
 
-    @ApiOperation("获取部门的用户")
-    @RequestMapping(value = "getUsers", method = RequestMethod.GET)
-    @ResponseBody
-    public List<Map<String, Object>> getUsers(@RequestParam(value = "oid") Integer oid) {
-        return wxUserService.selectMaps(new EntityWrapper<WxUser>().setSqlSelect("user_id,name,authority,organization_id").eq("organization_id", oid).eq("status",1));
-    }
-
     @ApiOperation("获取部门及子部门的用户")
-    @RequestMapping(value = "getUsers1", method = RequestMethod.GET)
+    @RequestMapping(value = "getUserSelection", method = RequestMethod.GET)
     @ResponseBody
-    public List<Map<String, Object>> getUsers1(@RequestParam(value = "oid") Integer oid) {
+    public HashMap<String, Object> getUsers(HttpServletRequest request) {
+        HashMap<String, Object> map = new HashMap<>();
+        WxUser wxUser = (WxUser) request.getSession().getAttribute("user");
+        if (wxUser==null) {
+            map.put("code",1);
+            map.put("msg", "登录状态失效，请重启小程序");
+            return map;
+        }
         List<Map<String, Object>> oids = organizationService.selectMaps(new EntityWrapper<Organization>().setSqlSelect("id,pid").orderBy("id"));
         List<Integer> ids = new ArrayList<>();
-        ids.add(oid);
+        ids.add(wxUser.getOrganizationId());
         for(Map<String, Object> organization : oids) {
             if(ids.contains(organization.get("pid")))
                 ids.add((Integer)organization.get("id"));
         }
-        return wxUserService.selectMaps(new EntityWrapper<WxUser>().setSqlSelect("user_id,name,authority,organization_id").in("organization_id",ids).eq("status",1));
+        map.put("code", 0);
+        map.put("userSelection", wxUserService.getUserSelection(ids));
+        return map;
     }
 
     @ApiOperation("获取所有用户")
