@@ -113,12 +113,20 @@ public class ProjectController {
     public List<HashMap<String,Object>> getProjectNames(HttpServletRequest request) {
         WxUser wxUser = (WxUser) request.getSession().getAttribute("user");
         List<Map<String, Object>> projectIds = groupService.selectMaps(new EntityWrapper<Group>().setSqlSelect("project_id").eq("user_id",wxUser.getUserId()));
+        List<Map<String, Object>> myProjectIds = projectService.selectMaps(new EntityWrapper<Project>().setSqlSelect("project_id").eq("leader_id",wxUser.getUserId()));
         List<Integer> ids = new ArrayList<>();
         for(Map<String, Object> project : projectIds) {
             if(!ids.contains(project.get("project_id")))
                 ids.add((Integer)project.get("project_id"));
         }
-        return projectService.getProjectNames(ids, wxUser.getUserId());
+        for(Map<String, Object> project : myProjectIds) {
+            if(!ids.contains(project.get("project_id")))
+                ids.add((Integer)project.get("project_id"));
+        }
+        if (ids == null) {
+            return null;
+        } else
+            return projectService.getProjectNames(ids, wxUser.getUserId());
     }
 
     @ApiOperation("检查项目名字是否合法")

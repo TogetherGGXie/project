@@ -1,6 +1,7 @@
 package com.demo.project.common.controller;
 
 
+import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.demo.project.common.persistence.modal.Organization;
@@ -177,6 +178,7 @@ public class WxUserController {
                 wxUser.setAuthority(0);
                 wxUser.setOpenId(mapper.get("openid").toString());
                 wxUser.setStatus(0);
+                wxUser.setCreateTime(DateUtil.date());
                 wxUserService.insert(wxUser);
             }
             request.getSession().setAttribute("user",wxUser);

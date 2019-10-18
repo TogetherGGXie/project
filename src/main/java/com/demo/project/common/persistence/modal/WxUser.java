@@ -4,7 +4,11 @@ import com.baomidou.mybatisplus.enums.IdType;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -55,6 +59,14 @@ public class WxUser implements Serializable {
      * 账号状态
      */
     private Integer status;
+
+    /**
+     * 创建时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @TableField("create_time")
+    private Date createTime;
 
 
     public Integer getUserId() {
@@ -121,6 +133,14 @@ public class WxUser implements Serializable {
         this.organizationId = organizationId;
     }
 
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
     @Override
     public String toString() {
         return "WxUser{" +
@@ -130,8 +150,9 @@ public class WxUser implements Serializable {
                 ", nickname='" + nickname + '\'' +
                 ", headImage='" + headImage + '\'' +
                 ", authority=" + authority +
-                ", organizationId='" + organizationId + '\'' +
+                ", organizationId=" + organizationId +
                 ", status=" + status +
+                ", createTime=" + createTime +
                 '}';
     }
 }

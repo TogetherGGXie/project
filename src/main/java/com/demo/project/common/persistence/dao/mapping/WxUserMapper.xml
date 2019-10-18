@@ -12,6 +12,7 @@
         <result column="authority" property="authority" />
         <result column="organization_id" property="organizationId" />
         <result column="status" property="status" />
+        <result column="create_time" property="createTime" />
     </resultMap>
 
 </mapper>
