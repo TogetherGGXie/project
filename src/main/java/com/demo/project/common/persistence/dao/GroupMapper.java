@@ -40,10 +40,12 @@ public interface GroupMapper extends BaseMapper<Group> {
     List<HashMap<String, Object>> getStatis(@Param("projectIds") List<Integer> projectIds);
 
     @Select("<script>" +
-            "\tSELECT groups.project_id, wx_user.name, wx_user.authority \n" +
+            "\tSELECT groups.project_id, wx_user.user_id, wx_user.name, wx_user.authority, organization.name as departmentName\n" +
             "\tfrom `groups` \n" +
             "\tjoin wx_user \n" +
             "\ton wx_user.user_id = groups.user_id \n" +
+            "\tjoin organization \n" +
+            "\ton organization.id = wx_user.organization_id \n" +
             "\twhere project_id in \n" +
             "\t<foreach collection='projectIds' item='projectId' index='index'  open = '(' close = ')' separator=','> \n" +
             "#{projectId} \n" +
@@ -53,6 +55,8 @@ public interface GroupMapper extends BaseMapper<Group> {
             @Result(property = "projectId", column = "project_id"),
             @Result(property = "name", column = "name"),
             @Result(property = "authority", column = "authority"),
+            @Result(property = "department", column = "departmentName"),
+            @Result(property = "userId", column = "user_id")
     })
     List<HashMap<String, Object>> getUsers(@Param("projectIds") List<Integer> projectIds);
 

@@ -3,6 +3,7 @@ package com.demo.project.common.controller;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateUtil;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.demo.project.common.persistence.modal.*;
 import com.demo.project.common.persistence.service.*;
@@ -186,7 +187,7 @@ public class AdministratorController {
     @ApiOperation("管理员编辑项目")
     @PostMapping("/editProject")
     public HashMap<String,Object> adminEditProject(HttpServletRequest request,
-                                                   @RequestBody Project project) {
+                                                   @RequestBody HashMap<String, Object> project) {
         Administrator administrator = (Administrator) request.getSession().getAttribute("admin");
         HashMap<String,Object> map = new HashMap<>();
         if(administrator == null) {
@@ -194,13 +195,26 @@ public class AdministratorController {
             map.put("msg", "登录状态失效，请重新登录后再试！");
         }else {
             System.out.println("project = " + project.toString());
-            System.out.println(project.getProjectId());
+            System.out.println(project.get("projectId"));
             List<Integer> ids = getOrganizationIds(administrator.getOid());
             System.out.println(ids.toString());
-            Integer oid = projectService.getOrganizationId(project.getProjectId());
+            Integer oid = projectService.getOrganizationId((Integer)project.get("projectId"));
             System.out.println("oid = " + oid);
+            Project p = new Project();
+            p.setProjectId((Integer)project.get("projectId"));
+            p.setProjectName((String)project.get("projectName"));
+            p.setIntroduction((String) project.get("introduction"));
+            p.setLeaderId((Integer)project.get("leaderId"));
+            p.setStartTime(DateUtil.parse((String)project.get("startTime")));
+            if (project.get("endTime") != null && project.get("endTime") != "") {
+                p.setEndTime(DateUtil.parse((String)project.get("endTime")));
+            }
             if(ids.contains(oid)){
-                projectService.updateById(project);
+                projectService.updateById(p);
+                List<Integer> userIds = (List)project.get("group");
+                if (userIds != null && !userIds.isEmpty()) {
+                    groupService.addStaffs(p.getProjectId(), userIds);
+                }
                 map.put("code",0);
             } else {
                 map.put("code", 1);
@@ -213,23 +227,40 @@ public class AdministratorController {
     @ApiOperation("管理员添加项目")
     @PostMapping("/addProject")
     public HashMap<String,Object> adminAddProject(HttpServletRequest request,
-                                                     @RequestBody Project project) {
+                                                     @RequestBody HashMap<String, Object> project) {
         Administrator administrator = (Administrator) request.getSession().getAttribute("admin");
         HashMap<String,Object> map = new HashMap<>();
+        System.out.println(project.toString());
         if(administrator == null) {
             map.put("code",1);
             map.put("msg", "登录状态失效，请重新登录后再试！");
         }else {
-            if (project.getLeaderId() == null) {
+            if (project.get("leaderId") == null) {
                 map.put("code",3);
                 map.put("msg", "请选择负责人");
             } else {
                 List<Integer> ids = getOrganizationIds(administrator.getOid());
-                WxUser wxUser = wxUserService.selectById(project.getLeaderId());
+                WxUser wxUser = wxUserService.selectById((Integer)project.get("leaderId"));
                 if (ids.contains(wxUser.getOrganizationId())) {
-                    if (project.getProjectName() != null) {
-                        project.setCreateTime(DateUtil.date());
-                        projectService.insert(project);
+                    if (project.get("projectName") != null && project.get("projectName") != "") {
+                        Project pro = new Project();
+                        pro.setIntroduction((String)project.get("introduction"));
+                        if (project.get("endTime") != null && project.get("endTime") != "") {
+                            System.out.println("endTime = " + project.get("endTime"));
+                            pro.setEndTime(DateUtil.parse((String)project.get("endTime")));
+
+                        }
+                        System.out.println("startTime = " + project.get("startTime"));
+                        pro.setStartTime(DateUtil.parse((String)project.get("startTime")));
+                        pro.setProjectName((String)project.get("projectName"));
+                        pro.setLeaderId((Integer)project.get("leaderId"));
+                        pro.setImg((String)project.get("img"));
+                        pro.setCreateTime(DateUtil.date());
+                        projectService.insert(pro);
+                        List<Integer> userIds = (List)project.get("group");
+                        if (userIds != null && !userIds.isEmpty()) {
+                            groupService.addStaffs(pro.getProjectId(), userIds);
+                        }
                         map.put("code", 0);
                     } else {
                         map.put("code",3);
