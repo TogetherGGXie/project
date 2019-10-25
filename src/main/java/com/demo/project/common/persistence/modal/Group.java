@@ -1,6 +1,7 @@
 package com.demo.project.common.persistence.modal;
 
 import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import java.io.Serializable;
 
@@ -20,11 +21,13 @@ public class Group implements Serializable {
     /**
      * 项目id
      */
+    @TableId("project_id")
     @TableField("project_id")
     private Integer projectId;
     /**
      * 用户id
      */
+    @TableId("user_id")
     @TableField("user_id")
     private Integer userId;
 
