@@ -7,7 +7,7 @@
         <encoder>
             <pattern>%d %p (%file:%line\)- %m%n</pattern>
             <!-- 控制台也要使用UTF-8，不要使用GBK，否则会中文乱码 -->
-            <charset>UTF-8</charset>
+<!--            <charset>UTF-8</charset>-->
         </encoder>
     </appender>
     <!-- RollingFileAppender：滚动记录文件，先将日志记录到指定文件，当符合某个条件时，将日志记录到其他文件 -->
@@ -40,11 +40,12 @@
     <!-- 控制台输出日志级别 -->
     <root level="info">
         <appender-ref ref="console" />
+        <appender-ref ref="demo" />
     </root>
     <!-- 指定项目中某个包，当有日志操作行为时的日志记录级别 -->
     <!-- com.liyan为根包，也就是只要是发生在这个根包下面的所有日志操作行为的权限都是DEBUG -->
     <!-- 级别依次为【从高到低】：FATAL > ERROR > WARN > INFO > DEBUG > TRACE  -->
-    <logger name = "com" level="warn">
-        <appender-ref ref="demo" />
-    </logger>
+<!--    <logger name = "com" level="warn">-->
+<!--        <appender-ref ref="demo" />-->
+<!--    </logger>-->
 </configuration>

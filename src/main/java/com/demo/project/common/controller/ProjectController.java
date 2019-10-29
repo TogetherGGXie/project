@@ -112,6 +112,9 @@ public class ProjectController {
     @RequestMapping(value = "getProjectNames", method = RequestMethod.GET )
     public List<HashMap<String,Object>> getProjectNames(HttpServletRequest request) {
         WxUser wxUser = (WxUser) request.getSession().getAttribute("user");
+        if(wxUser == null) {
+            return null;
+        }
         List<Map<String, Object>> projectIds = groupService.selectMaps(new EntityWrapper<Group>().setSqlSelect("project_id").eq("user_id",wxUser.getUserId()));
         List<Map<String, Object>> myProjectIds = projectService.selectMaps(new EntityWrapper<Project>().setSqlSelect("project_id").eq("leader_id",wxUser.getUserId()));
         List<Integer> ids = new ArrayList<>();
