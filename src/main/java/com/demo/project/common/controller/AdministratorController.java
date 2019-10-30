@@ -194,12 +194,12 @@ public class AdministratorController {
             map.put("code",1);
             map.put("msg", "登录状态失效，请重新登录后再试！");
         }else {
-            System.out.println("project = " + project.toString());
-            System.out.println(project.get("projectId"));
+//            System.out.println("project = " + project.toString());
+//            System.out.println(project.get("projectId"));
             List<Integer> ids = getOrganizationIds(administrator.getOid());
-            System.out.println(ids.toString());
+//            System.out.println(ids.toString());
             Integer oid = projectService.getOrganizationId((Integer)project.get("projectId"));
-            System.out.println("oid = " + oid);
+//            System.out.println("oid = " + oid);
             Project p = new Project();
             p.setProjectId((Integer)project.get("projectId"));
             p.setProjectName((String)project.get("projectName"));
@@ -230,7 +230,7 @@ public class AdministratorController {
                                                      @RequestBody HashMap<String, Object> project) {
         Administrator administrator = (Administrator) request.getSession().getAttribute("admin");
         HashMap<String,Object> map = new HashMap<>();
-        System.out.println(project.toString());
+//        System.out.println(project.toString());
         if(administrator == null) {
             map.put("code",1);
             map.put("msg", "登录状态失效，请重新登录后再试！");
@@ -246,11 +246,11 @@ public class AdministratorController {
                         Project pro = new Project();
                         pro.setIntroduction((String)project.get("introduction"));
                         if (project.get("endTime") != null && project.get("endTime") != "") {
-                            System.out.println("endTime = " + project.get("endTime"));
+//                            System.out.println("endTime = " + project.get("endTime"));
                             pro.setEndTime(DateUtil.parse((String)project.get("endTime")));
 
                         }
-                        System.out.println("startTime = " + project.get("startTime"));
+//                        System.out.println("startTime = " + project.get("startTime"));
                         pro.setStartTime(DateUtil.parse((String)project.get("startTime")));
                         pro.setProjectName((String)project.get("projectName"));
                         pro.setLeaderId((Integer)project.get("leaderId"));
@@ -272,6 +272,54 @@ public class AdministratorController {
                 }
             }
         }
+        return map;
+    }
+
+    @ApiOperation("管理员根据项目获取日志列表")
+    @GetMapping("/getLogs")
+    public HashMap<String,Object> adminGetProjectLog(HttpServletRequest request, @RequestParam(name = "projectId") Integer projectId) {
+        Administrator administrator = (Administrator) request.getSession().getAttribute("admin");
+        HashMap<String,Object> map = new HashMap<>();
+        if(administrator == null) {
+            map.put("code",1);
+            map.put("msg", "登录状态失效，请重新登录后再试！");
+        }else {
+            Project p = projectService.selectById(projectId);
+            if (p == null) {
+                map.put("code", 1);
+                map.put("msg", "项目有误，请稍后重试！");
+                return map;
+            }
+            WxUser leader = wxUserService.selectById(p.getLeaderId());
+            if (leader == null) {
+                map.put("code", 2);
+                map.put("msg", "项目有误，请稍后重试！");
+                return map;
+            }
+            List<Integer> ids = getOrganizationIds(administrator.getOid());
+            if (!ids.contains(leader.getOrganizationId())) {
+                map.put("code", 1);
+                map.put("msg", "您暂无查看该项目的日志的权限！");
+                return map;
+            }
+            List<HashMap<String,Object>> projectLogList = projectLogService.getLogList(projectId);
+            List<Integer> projectLogIds = new ArrayList<>();
+            if (projectLogList != null && !projectLogList.isEmpty()) {
+                for (HashMap<String,Object>  resultMap : projectLogList) {
+                    projectLogIds.add((Integer)resultMap.get("logId"));
+                }
+                HashMap<String, List<HashMap<String, Object>>> viewHistory = viewStatisService.getHistory(projectLogIds);
+                for (HashMap<String,Object> projectLog : projectLogList ){
+                    projectLog.put("viewHistory",viewHistory.get(projectLog.get("logId").toString()));
+                }
+                map.put("record",projectLogList);
+            } else {
+                map.put("record", null);
+            }
+            map.put("total", projectLogList.size());
+            map.put("code",0);
+        }
+
         return map;
     }
 
@@ -408,9 +456,9 @@ public class AdministratorController {
         }else {
             List<Integer> ids = getOrganizationIds(administrator.getOid());
             Integer oid = projectService.getOrganizationId(projectLog.getProjectId());
-            System.out.println(projectLog.getProjectId());
-            System.out.println("projectLog = ");
-            System.out.println(projectLog);
+//            System.out.println(projectLog.getProjectId());
+//            System.out.println("projectLog = ");
+//            System.out.println(projectLog);
             if(ids.contains(oid)){
                 projectLogService.updateById(projectLog);
                 map.put("code",0);

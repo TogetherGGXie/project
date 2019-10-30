@@ -55,6 +55,30 @@ public interface ProjectLogMapper extends BaseMapper<ProjectLog> {
     })
     List<HashMap<String,Object>> getLogs(Pagination pagination, @Param("projectId") Integer projectId, @Param("keyword") String keyword);
 
+    @Select("SELECT\n" +
+            "\tproject_log.log_id,\n" +
+            "\twx_user.NAME,\n" +
+            "\tproject_log.date,\n" +
+            "\tproject_log.content,\n" +
+            "\tproject_log.view_times,\n" +
+            "\tproject_log.pics \n" +
+            "FROM\n" +
+            "\t`project_log`\n" +
+            "\tJOIN wx_user ON project_log.user_id = wx_user.user_id \n" +
+            "WHERE\n" +
+            "\tproject_log.project_id = #{projectId}\n" +
+            "ORDER BY\n" +
+            "\tproject_log.create_time DESC")
+    @Results(id="LogListResultMap",value={
+            @Result(property = "logId", column = "log_id"),
+            @Result(property = "date", column = "date"),
+            @Result(property = "userName", column = "NAME"),
+            @Result(property = "content", column = "content"),
+            @Result(property = "viewTimes", column = "view_times"),
+            @Result(property = "pics", column = "pics"),
+    })
+    List<HashMap<String,Object>> getLogList(@Param("projectId") Integer projectId);
+
     @Update("UPDATE project_log \n" +
             "SET view_times = view_times + 1 \n" +
             "WHERE\n" +

@@ -21,4 +21,5 @@ public interface ProjectLogService extends IService<ProjectLog> {
     Boolean updateViewTimes(Integer logId);
     String getLogContents(Integer projectId);
     List<HashMap<String, Object>> getProjectLogList(List<Integer> organizationIds);
+    List<HashMap<String, Object>> getLogList(Integer projectId);
 }
